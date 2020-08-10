@@ -7,6 +7,7 @@ use App\User;
 use App\Tuto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -35,6 +36,8 @@ class TutoController extends Controller
                 'message'   =>  'Error validator']
                 ,422);
         }
+
+
         $newEntry = Tuto::create([
             'title'=>$request['title'],
             'difficulty'=>$request['difficulty'],
@@ -53,7 +56,7 @@ class TutoController extends Controller
         return response()->json('new_entry = '.$newEntry->id,201);
     }
 
-    function index(Request $request){
+    function index(){
         $tutos =  Tuto::all();
         return response()->json($tutos);
     }
@@ -102,11 +105,10 @@ class TutoController extends Controller
             ), 404);
         }
         $validator = Validator::make($request->all(),[
-            'title' => 'string| unique:tutos|max:255',
+            'title' => 'string|max:255',
             'difficulty' => '',
             'langage' => 'string',
             'state' => 'integer',
-
             'summary' => 'string',
             'content' => 'string',
             'pathImg' => 'string',
@@ -117,6 +119,7 @@ class TutoController extends Controller
                 'message'   =>  'Error validator']
                 ,422);
         }
+        $tmp= $this->storeImage($request);
         $tuto = Tuto::whereId($id)->first();
         $tuto->update([
             'title'=>$request['title'],
@@ -126,8 +129,7 @@ class TutoController extends Controller
             'summary'=>$request['summary'],
             'content'=>$request['content'],
             'pathImg'=>$request['pathImg'],
-
-            'files'=>$request['files'],
+            'files'=>$tmp,
         ]);
         return response()->json('Update tuto');
 
@@ -151,5 +153,13 @@ class TutoController extends Controller
         $tuto->delete();
         return response()->json('Tuto nb='.$id.' deleted');
 
+    }
+
+    function storeImage(Request $request){
+        $file = $request->file('files');
+        $fileName='1'.$file->getClientOriginalExtension();
+        $filePath='/uploads/'.$fileName;
+        $file->storeAs('/uploads/','test.png','uploads');
+        return File::create(['file_name' => $fileName, 'path' => $filePath, 'file_extension' => $file->getClientOriginalExtension()]);
     }
 }

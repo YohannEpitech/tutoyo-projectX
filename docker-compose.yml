@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+    backend:
+        build: ./projectx-back
+        depends_on:
+            - db
+        image: projectx-backend
+        environment:
+            DB_PASSWORD: Yobar92110
+
+    db:
+        build: ./projectx-db
+        image: projectx-db
+        environment:
+            POSTGRES_PASSWORD: Yobar92110
+        volumes:
+            - /tmp/projectx/db:/var/lib/postgresql/data:rw
+
+    frontend:
+        build: ./projectx-front
+        depends_on:
+            - backend
+        image: projectx-front
+        ports:
+            - 80:80
