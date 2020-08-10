@@ -9,30 +9,39 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 
 class UserController extends Controller
 {
     function register(Request $request){
-        $username = $request->only('username')['username'];
-        $password = $request->only('password')['password'];
-        $email = $request->only('email')['email'];
+        $validator = Validator::make($request->all(),[
+            'username' => 'require|string| max:255',
+            'email' => 'require|email address',
+            'password' => 'require|password',
 
-        User::create([
-            'name'=>$username,
-            'email'=>$email,
-            'password'=>Hash::make($password)
         ]);
-        return response()->json('User create');
+        if ($validator->fails()){
+            return response()->json([
+                'code'      =>  422,
+                'message'   =>  'Error validator in register']
+                ,422);
+        }
+        User::create([
+            'name'=> $request['username'],
+            'email'=>$request['email'],
+            'password'=>Hash::make($request['password']),
+            'follow_tutos' => serialize([])
+        ]);
+        return response()->json('User create',201);
     }
 
     function login(Request $request){
         $credentials=$request->only('email','password');
-        
+
         if (Auth::attempt($credentials)){
-            $user = Auth::user();
-            return response()->json($user);
-        } 
+            return response()->json(Auth::user());
+        }
         return response()->json('User unknown');
     }
 
@@ -43,7 +52,20 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     function show($id){
+        if(intval($id) == NULL){
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "Invalid query"
+            ), 400);
+        }
+        elseif(User::whereId($id)->first() == null){
+            return response()->json(array(
+                'code'      =>  404,
+                'message'   =>  "Ressource not found"
+            ), 404);
+        }
         $user =  DB::table('users')->whereId($id)->first();
+        $user->follow_tutos = unserialize($user->follow_tutos);
         return response()->json($user);
     }
 
@@ -55,20 +77,42 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     function update(Request $request, $id){
-        $user =  User::whereId($id)->first();
+        if(intval($id) == NULL){
+            return response()->json(array(
+                'code'      =>  400,
+                'message'   =>  "Invalid query"
+            ), 400);
+        }
+        elseif(User::whereId($id)->first() == null){
+            return response()->json(array(
+                'code'      =>  404,
+                'message'   =>  "Ressource not found"
+            ), 404);
+        }
+        $validator = Validator::make($request->all(),[
+            'username' => 'string| max:255',
+            'email' => 'email address',
+        ]);
+        if ($validator->fails()){
+            return response()->json([
+                'code'      =>  422,
+                'message'   =>  'Error validator in update']
+                ,422);
+        }
 
-        if ($request['username'] == ''){
-            $request['username'] = $user->name;
+        $user =  User::whereId($id)->first();
+        if ($request['username'] != ''){
+            $user->name = $request['username'];
         }
-        if ($request['follow_tutos'] == ''){
-            $request['follow_tutos'] = $user->follow_tutos;
+        if ($request['follow_tutos'] != null){
+            $user->follow_tutos = serialize($request['follow_tutos']);
         }
-        
-        $user->name=$request['username'];
-        $user->follow_tutos = $request['follow_tutos'];
         $user->save();
 
-        return response()->json('Update user');
+        return response()->json([
+            "code" => 201,
+            "message" => 'User successfully updated'
+        ],201 );
 
     }
 
@@ -78,10 +122,16 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    function destroy(User $user){
-        // $tuto = Tuto::whereId($id)->first();
+    function destroy($id_user){
+        $user = User::whereId($id_user)->first();
+        if ($user == null) {
+            return response()->json(array(
+                'code'      =>  404,
+                'message'   =>  "Ressource not found"
+            ), 404);
+        }
         $user->delete();
-        return response()->json('Tuto deleted');
+        return response()->json('User successfully deleted');
 
     }
 }
