@@ -1,7 +1,6 @@
-FROM postgre
+FROM postgres:9.4
 
 ENV TZ=Europe/Paris
-ENV POSTGRES_PASSWORD Yobar92110
 ENV POSTGRES_DB projectX
 ENV POSTGRES_USER projectX
 
