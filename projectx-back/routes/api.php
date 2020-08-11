@@ -24,6 +24,10 @@ Route::post('/users/{id}/update', 'UserController@update');
 Route::post('/users/{id}/destroy', 'UserController@destroy');
 Route::get('/users/{id}', 'UserController@show');
 
+Route::get('/users/{id}/tutos', 'UserController@myTutos');
+Route::post('/users/me/tutos/add', 'UserController@add');
+Route::post('/users/me/tutos/delete', 'UserController@del');
+
 
 Route::post('/tutos/create', 'TutoController@store');
 Route::get('/tutos/{id}', 'TutoController@show');

@@ -26,8 +26,8 @@ class CreateTutosTable extends Migration
 
             $table->string('pathImg')->nullable();
             $table->string('files')->nullable();
-            $table->string('ratings')->nullable();
-            $table->string('nb_ratings')->nullable();
+            $table->string('ratings')->nullable()->default(0);
+            $table->string('nb_ratings')->nullable()->default(0);
             $table->timestamps();
         });
     }

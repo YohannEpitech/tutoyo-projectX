@@ -12,9 +12,9 @@ RUN apt update \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY composer.json  /usr/src/pokedex/
-COPY composer.lock /usr/src/pokedex/
-WORKDIR /usr/src/pokedex/
+COPY composer.json  /usr/src/projectx-backend/
+COPY composer.lock /usr/src/projectx-backend/
+WORKDIR /usr/src/projectx-backend/
 RUN composer install --no-scripts --no-autoloader
 COPY . /usr/src/projectx-backend/
 

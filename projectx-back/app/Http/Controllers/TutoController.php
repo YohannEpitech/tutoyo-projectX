@@ -28,7 +28,6 @@ class TutoController extends Controller
             'author_id' => 'integer|required',
             'summary' => 'string|required',
             'content' => 'string|required',
-            'pathImg' => 'string|required',
         ]);
         if ($validator->fails()){
             return response()->json([
@@ -111,7 +110,7 @@ class TutoController extends Controller
             'state' => 'integer',
             'summary' => 'string',
             'content' => 'string',
-            'pathImg' => 'string',
+
         ]);
         if ($validator->fails()){
             return response()->json([
@@ -119,7 +118,7 @@ class TutoController extends Controller
                 'message'   =>  'Error validator']
                 ,422);
         }
-        $tmp= $this->storeImage($request);
+        // $tmp= $this->storeImage($request);
         $tuto = Tuto::whereId($id)->first();
         $tuto->update([
             'title'=>$request['title'],
@@ -129,7 +128,7 @@ class TutoController extends Controller
             'summary'=>$request['summary'],
             'content'=>$request['content'],
             'pathImg'=>$request['pathImg'],
-            'files'=>$tmp,
+            // 'files'=>$tmp,
         ]);
         return response()->json('Update tuto');
 
@@ -157,9 +156,7 @@ class TutoController extends Controller
 
     function storeImage(Request $request){
         $file = $request->file('files');
-        $fileName='1'.$file->getClientOriginalExtension();
-        $filePath='/uploads/'.$fileName;
         $file->storeAs('/uploads/','test.png','uploads');
-        return File::create(['file_name' => $fileName, 'path' => $filePath, 'file_extension' => $file->getClientOriginalExtension()]);
+        // return File::create(['file_name' => $fileName, 'path' => $filePath, 'file_extension' => $file->getClientOriginalExtension()]);
     }
 }

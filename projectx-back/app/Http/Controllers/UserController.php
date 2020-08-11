@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Tuto;
+
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -16,9 +18,9 @@ class UserController extends Controller
 {
     function register(Request $request){
         $validator = Validator::make($request->all(),[
-            'username' => 'require|string| max:255',
-            'email' => 'require|email address',
-            'password' => 'require|password',
+            'username' => 'required|string| max:255',
+            'email' => 'required',
+            'password' => 'required',
 
         ]);
         if ($validator->fails()){
@@ -27,20 +29,28 @@ class UserController extends Controller
                 'message'   =>  'Error validator in register']
                 ,422);
         }
-        User::create([
+
+        $newUser =User::create([
             'name'=> $request['username'],
             'email'=>$request['email'],
             'password'=>Hash::make($request['password']),
-            'follow_tutos' => serialize([])
+            'follow_tutos' => serialize([1,2])
         ]);
-        return response()->json('User create',201);
+        return response()->json([
+            "message" => 'User create',
+            "code" => 201,
+            'user' => $newUser]
+            ,201);
     }
 
     function login(Request $request){
         $credentials=$request->only('email','password');
 
         if (Auth::attempt($credentials)){
-            return response()->json(Auth::user());
+            $user =  DB::table('users')->whereId(Auth::user()->id)->first();
+            $user->follow_tutos = unserialize($user->follow_tutos);
+
+            return response()->json($user);
         }
         return response()->json('User unknown');
     }
@@ -132,6 +142,57 @@ class UserController extends Controller
         }
         $user->delete();
         return response()->json('User successfully deleted');
+
+    }
+
+    function myTutos($id){
+        $idUser = $id;
+        $user = User::whereId($idUser)->first();
+        if ($user->role == 1){
+            $tutos = Tuto::where('author_id','=',$idUser)->get();
+        } elseif ($user->role == 0){
+            $followedTutos = unserialize($user->follow_tutos);
+            $tutos=[];
+            foreach ($followedTutos as $tuto){
+                $tutos[] =intval(Tuto::where('id','=',$tuto)->first()->id);
+            }
+        }
+        return response()->json($tutos);
+
+    }
+
+    function add(Request $request){
+
+        $idUser = intval($request['me']);
+        $idTuto = intval($request['addTutoId']);
+        $user = User::whereId($idUser)->first();
+
+        $followedTutos = unserialize($user->follow_tutos);
+        if (!in_array($idTuto, $followedTutos)){
+            $followedTutos[]=$idTuto;
+        }
+        $user->follow_tutos = serialize($followedTutos);
+        $user->save();
+        $user->follow_tutos = unserialize($user->follow_tutos);
+
+        return response()->json($user);
+
+    }
+    function del(Request $request){
+        $idUser = $request['me'];
+        $idTuto = $request['delTutoId'];
+
+        $user = User::whereId($idUser)->first();
+
+        $followedTutos = unserialize($user->follow_tutos);
+        if ($index = array_search($idTuto, $followedTutos)){
+            array_splice($followedTutos,$index,1);
+        }
+        $user->follow_tutos = serialize($followedTutos);
+        $user->save();
+        $user->follow_tutos = unserialize($user->follow_tutos);
+
+        return response()->json($user);
 
     }
 }
