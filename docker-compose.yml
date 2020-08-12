@@ -4,20 +4,21 @@ services:
     www:
         image: nginx:alpine
         volumes:
-          - ./www/nginx/default.conf:/etc/nginx/conf.d/default.conf
+          - ./www/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
         ports:
-          - 80:80
+          - 81:80
         depends_on:
           - backend
           - frontend
-          - db
-
 
     backend:
-        build: ./projectx-back
+        build:
+            context: ./projectx-back
+        user: 1000:1000
         volumes:
-            - .projectx-back:/app
+            - ./projectx-back:/usr/src/projectx-backend:rw
         environment:
+            DB_NAME: projectx
             DB_PASSWORD: password
 
     db:
@@ -30,16 +31,14 @@ services:
             MYSQL_USER: my_shop
             MYSQL_PASSWORD: password
         volumes:
-            - /tmp/projectx/db:/var/lib/mysql:rw
+            - /home/yobar/projectx/db:/var/lib/mysql:rw
 
     frontend:
         image: node
-        user: ${UID}:{UID}
+        user: 1000:1000
         working_dir: /app
         volumes:
             - ./projectx-front:/app
         environment:
             NODE_ENV: development
         command: "npm run serve"
-        ports:
-            - 80:80

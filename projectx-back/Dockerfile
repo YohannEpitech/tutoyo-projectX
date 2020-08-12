@@ -12,15 +12,17 @@ RUN apt update \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+RUN groupadd -g 1000 user \
+  && useradd -m -u 1000 -g 1000 user
 COPY composer.json  /usr/src/projectx-backend/
 COPY composer.lock /usr/src/projectx-backend/
 WORKDIR /usr/src/projectx-backend/
-RUN composer install --no-scripts --no-autoloader
+# RUN composer install --no-scripts --no-autoloader
 COPY . /usr/src/projectx-backend/
 
 ENV DB_HOST=db
-ENV DB_PORT=5432
-ENV DB_DATABASE=projectX
+ENV DB_PORT=3306
+ENV DB_DATABASE=projectx
 
 
 RUN cp .env.example .env \
