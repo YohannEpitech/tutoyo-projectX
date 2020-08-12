@@ -57,6 +57,9 @@ class TutoController extends Controller
 
     function index(){
         $tutos =  Tuto::all();
+        foreach ($tutos as $tuto){
+            $tuto['authorName'] =  DB::table('users')->whereId($tuto->author_id)->first()->name;
+        }
         return response()->json($tutos);
     }
 
@@ -158,5 +161,25 @@ class TutoController extends Controller
         $file = $request->file('files');
         $file->storeAs('/uploads/','test.png','uploads');
         // return File::create(['file_name' => $fileName, 'path' => $filePath, 'file_extension' => $file->getClientOriginalExtension()]);
+    }
+
+    function search(Request $request){
+        $tutos =  Tuto::where('title','like','%'.$request['searchField'].'%')->get();
+
+        if (count($tutos) ==0){
+            return response()->json([
+                "code" => 200,
+                "messages"=> 'Result for '.$request['searchField'],
+                "result" => 'No result for you']
+            );
+        }
+
+        foreach ($tutos as $tuto){
+            $tuto['authorName'] =  DB::table('users')->whereId($tuto->author_id)->first()->name;
+        }
+        return response()->json([
+            "code" => 200,
+            "messages"=> 'Result for '.$request['searchField'],
+            "result" => $tutos]);
     }
 }

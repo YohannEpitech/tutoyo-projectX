@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -47,12 +47,29 @@ class UserController extends Controller
         $credentials=$request->only('email','password');
 
         if (Auth::attempt($credentials)){
-            $user =  DB::table('users')->whereId(Auth::user()->id)->first();
+            $user =  User::whereId(Auth::user()->id)->first();
+            $user->remember_token = Str::uuid()->toString();
+            $user->save();
             $user->follow_tutos = unserialize($user->follow_tutos);
-
-            return response()->json($user);
+            return response()->json([
+                "code" => 201,
+                "message" => 'Successfully login',
+                "result" =>$user,
+                "token" => $user->remember_token]
+            );
         }
         return response()->json('User unknown');
+    }
+
+    function logout(){
+        $user =  DB::table('users')->whereId(Auth::user()->id)->first();
+        $user->remember_token = '';
+        return response()->json([
+            "code" => 201,
+            "message" => 'successfully logout']
+        );
+
+
     }
 
     /**
@@ -154,10 +171,13 @@ class UserController extends Controller
             $followedTutos = unserialize($user->follow_tutos);
             $tutos=[];
             foreach ($followedTutos as $tuto){
-                $tutos[] =intval(Tuto::where('id','=',$tuto)->first()->id);
+                $tutos[] = Tuto::whereId($tuto)->first();
             }
         }
-        return response()->json($tutos);
+        return response()->json([
+            "listTutos"=> $tutos,
+            "code" => 201]
+            ,201 );
 
     }
 
