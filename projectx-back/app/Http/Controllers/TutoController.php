@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+
 
 class TutoController extends Controller
 {
@@ -28,7 +32,9 @@ class TutoController extends Controller
             'author_id' => 'integer|required',
             'summary' => 'string|required',
             'content' => 'string|required',
+            'files'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
         if ($validator->fails()){
             return response()->json([
                 "code" => 422,
@@ -36,6 +42,11 @@ class TutoController extends Controller
                 ,422);
         }
 
+        $img=$request->file('files');
+        $name = Str::slug('tuto_'.time());
+        $folder = '/uploads/tutos';
+        $filePath = $name. '.' . $img->getClientOriginalExtension();
+        $img->storeAs($folder, $filePath, 'public');
 
         $newEntry = Tuto::create([
             'title'=>$request['title'],
@@ -49,14 +60,14 @@ class TutoController extends Controller
             'pathImg'=>$request['pathImg'],
             'ratings'=>$request['ratings'],
             'nb_ratings'=>$request['nb_ratings'],
-            'files'=>$request['files'],
+            'files'=>$filePath,
         ]);
 
         return response()->json('new_entry = '.$newEntry->id,201);
     }
 
     function index(){
-        $tutos =  Tuto::all();
+        $tutos =  Tuto::where('state','=','2')->get();
         foreach ($tutos as $tuto){
             $tuto['authorName'] =  DB::table('users')->whereId($tuto->author_id)->first()->name;
         }
@@ -82,7 +93,7 @@ class TutoController extends Controller
                 'message'   =>  "Ressource not found"
             ), 404);
         }
-        $tutos =  DB::table('tutos')->whereId($id)->first();
+        $tutos =  Tuto::whereId($id)->first();
         return response()->json($tutos);
     }
 
@@ -113,6 +124,7 @@ class TutoController extends Controller
             'state' => 'integer',
             'summary' => 'string',
             'content' => 'string',
+            'files'=>  'image|mimes:jpeg,png,jpg,gif|max:2048'
 
         ]);
         if ($validator->fails()){
@@ -121,7 +133,8 @@ class TutoController extends Controller
                 'message'   =>  'Error validator']
                 ,422);
         }
-        // $tmp= $this->storeImage($request);
+
+
         $tuto = Tuto::whereId($id)->first();
         $tuto->update([
             'title'=>$request['title'],
@@ -131,8 +144,19 @@ class TutoController extends Controller
             'summary'=>$request['summary'],
             'content'=>$request['content'],
             'pathImg'=>$request['pathImg'],
-            // 'files'=>$tmp,
+
+
         ]);
+
+        if ($request->has('files')){
+            $img=$request->file('files');
+            $name = Str::slug('tuto_'.time());
+            $folder = '/uploads/tutos';
+            $filePath = $name. '.' . $img->getClientOriginalExtension();
+            $img->storeAs($folder, $filePath, 'public');
+            $tuto->files=$filePath;
+            $tuto->save();
+        }
         return response()->json('Update tuto');
 
     }
@@ -181,5 +205,17 @@ class TutoController extends Controller
             "code" => 200,
             "messages"=> 'Result for '.$request['searchField'],
             "result" => $tutos]);
+    }
+
+    function download(Request $request){
+        $tuto = Tuto::whereId($request['id'])->first();
+        return  Storage::download("public/uploads/tutos/".$tuto->files);
+    }
+
+    function archive(Request $request){
+        $tuto = Tuto::whereId($request['id'])->first();
+        $tuto->state = 3;
+        $tuto->save();
+        return response()->json('Tuto archived');
     }
 }

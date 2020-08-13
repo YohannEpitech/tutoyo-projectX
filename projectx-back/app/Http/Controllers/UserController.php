@@ -61,9 +61,10 @@ class UserController extends Controller
         return response()->json('User unknown');
     }
 
-    function logout(){
-        $user =  DB::table('users')->whereId(Auth::user()->id)->first();
+    function logout(Request $request){
+        $user =  User::whereId($request->id)->first();
         $user->remember_token = '';
+        $user->save();
         return response()->json([
             "code" => 201,
             "message" => 'successfully logout']
@@ -165,17 +166,16 @@ class UserController extends Controller
     function myTutos($id){
         $idUser = $id;
         $user = User::whereId($idUser)->first();
-        if ($user->role == 1){
-            $tutos = Tuto::where('author_id','=',$idUser)->get();
-        } elseif ($user->role == 0){
-            $followedTutos = unserialize($user->follow_tutos);
-            $tutos=[];
-            foreach ($followedTutos as $tuto){
-                $tutos[] = Tuto::whereId($tuto)->first();
-            }
+        $tutosAuthor = Tuto::where('author_id','=',$idUser)->get();
+        $followedTutos = unserialize($user->follow_tutos);
+        $tutos=[];
+        foreach ($followedTutos as $tuto){
+            $tutos[] = Tuto::whereId($tuto)->first();
         }
+
         return response()->json([
-            "listTutos"=> $tutos,
+            "followedTuto"=> $tutos,
+            "authorTuto" => $tutosAuthor,
             "code" => 201]
             ,201 );
 
@@ -205,8 +205,14 @@ class UserController extends Controller
         $user = User::whereId($idUser)->first();
 
         $followedTutos = unserialize($user->follow_tutos);
-        if ($index = array_search($idTuto, $followedTutos)){
-            array_splice($followedTutos,$index,1);
+        if (in_array($idTuto, $followedTutos)) {
+            if (count($followedTutos)>1 ){
+                $index = array_search($idTuto, $followedTutos);
+                array_splice($followedTutos, $index, 1);
+            } else {
+                $followedTutos = [];
+            }
+
         }
         $user->follow_tutos = serialize($followedTutos);
         $user->save();

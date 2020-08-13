@@ -18,7 +18,7 @@ class CreateTutosTable extends Migration
             $table->string('title')->unique();
             $table->integer('author_id');
 
-            $table->string('difficulty')->nullable();
+            $table->integer('difficulty')->nullable();
             $table->string('langage')->nullable();
             $table->integer('state');
             $table->string('summary')->nullable();

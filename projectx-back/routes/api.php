@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', 'UserController@register');
 Route::post('/login', 'UserController@login');
-Route::get('/logout', 'UserController@logout');
+Route::post('/logout', 'UserController@logout');
 
 
 Route::post('/users/{id}/update', 'UserController@update');
@@ -35,6 +35,10 @@ Route::post('/tutos/create', 'TutoController@store');
 Route::get('/tutos/{id}', 'TutoController@show');
 Route::post('/tutos/{id}/destroy', 'TutoController@destroy');
 Route::post('/tutos/{id}/update', 'TutoController@update');
+Route::get('/tutos/{id}/download', 'TutoController@download');
+Route::get('/tutos/{id}/archive', 'TutoController@archive');
+
+
 Route::get('/tutos/search/{searchField}', 'TutoController@search');
 
 Route::get('/tutos', 'TutoController@index');
