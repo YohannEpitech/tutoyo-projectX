@@ -58,7 +58,9 @@ class UserController extends Controller
                 "token" => $user->remember_token]
             );
         }
-        return response()->json('User unknown');
+        return response()->json([
+            'code' => 404,
+            'error'=>'User unknown'],404);
     }
 
     function logout(Request $request){
@@ -135,6 +137,7 @@ class UserController extends Controller
         if ($request['follow_tutos'] != null){
             $user->follow_tutos = serialize($request['follow_tutos']);
         }
+        $user->role = $request['role'];
         $user->save();
 
         return response()->json([
@@ -163,6 +166,11 @@ class UserController extends Controller
 
     }
 
+    function all(){
+        $users = User::all();
+        return response()->json($users);
+    }
+
     function myTutos($id){
         $idUser = $id;
         $user = User::whereId($idUser)->first();
@@ -170,7 +178,10 @@ class UserController extends Controller
         $followedTutos = unserialize($user->follow_tutos);
         $tutos=[];
         foreach ($followedTutos as $tuto){
-            $tutos[] = Tuto::whereId($tuto)->first();
+            $tmp = Tuto::whereId($tuto)->first();
+            if ($tmp != null){
+                $tutos[]=$tmp;
+            }
         }
 
         return response()->json([

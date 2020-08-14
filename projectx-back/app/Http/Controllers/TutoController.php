@@ -69,7 +69,7 @@ class TutoController extends Controller
     function index(){
         $tutos =  Tuto::where('state','=','2')->get();
         foreach ($tutos as $tuto){
-            $tuto['authorName'] =  DB::table('users')->whereId($tuto->author_id)->first()->name;
+            $tuto['authorName'] =  DB::table('users')->whereId($tuto->author_id)->first();
         }
         return response()->json($tutos);
     }
