@@ -30,10 +30,11 @@ class TutoController extends Controller
             'langage' => 'required',
             'state' => 'integer|required',
             'author_id' => 'integer|required',
-            'summary' => 'string|required',
-            'content' => 'string|required',
-            'files'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'summary' => 'string',
+            'content' => 'string',
+            'files'     =>  'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+        return dd($validator);
 
         if ($validator->fails()){
             return response()->json([
@@ -47,7 +48,15 @@ class TutoController extends Controller
         $folder = '/uploads/tutos';
         $filePath = $name. '.' . $img->getClientOriginalExtension();
         $img->storeAs($folder, $filePath, 'public');
-
+        if (!$request['summary']){
+            $request['summary']='';
+        }
+        if (!$request['content']){
+            $request['content']='';
+        }
+        if (!$request['files']){
+            $request['files']='';
+        }
         $newEntry = Tuto::create([
             'title'=>$request['title'],
             'difficulty'=>$request['difficulty'],
@@ -94,7 +103,9 @@ class TutoController extends Controller
             ), 404);
         }
         $tutos =  Tuto::whereId($id)->first();
-        return response()->json($tutos);
+        return response()->json([
+            'code' => 200,
+            'result' => $tutos],200);
     }
 
     /**
