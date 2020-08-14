@@ -41,6 +41,7 @@ Route::get('/tutos/search/{searchField}', 'TutoController@search');
 
 Route::get('/tutos', 'TutoController@index');
 
+Route::resource('langages', 'LangageController');
 
 
 
