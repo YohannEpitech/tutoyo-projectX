@@ -28,10 +28,12 @@ export default {
 
   },
   methods:{
-    async initData(){
-    let rawResponse = await fetch(`/api/tutos`)
-    let data = await rawResponse.json();
-    this.lists = data;
+    initData(){
+    fetch(`/api/tutos`)
+    .then(response => response.json())
+    .then(response => {
+      this.lists = response
+    })
     }
   }
 }

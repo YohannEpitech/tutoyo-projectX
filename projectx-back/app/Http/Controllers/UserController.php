@@ -174,18 +174,36 @@ class UserController extends Controller
     function myTutos($id){
         $idUser = $id;
         $user = User::whereId($idUser)->first();
-        $tutosAuthor = Tuto::where('author_id','=',$idUser)->get();
+        $tmpAuthor = Tuto::where('author_id','=',$idUser)->get();
+        $tutosAuthor = [];
+        foreach ($tmpAuthor as $tuto){
+            if ($tuto != null){
+                $tuto['authorName'] = $user->name;
+                $tutosAuthor = $tuto;
+            }
+
+
+        }
+
         $followedTutos = unserialize($user->follow_tutos);
-        $tutos=[];
+        $tutosFollow=[];
         foreach ($followedTutos as $tuto){
-            $tmp = Tuto::whereId($tuto)->first();
-            if ($tmp != null){
-                $tutos[]=$tmp;
+            $tmpTuto = Tuto::whereId($tuto)->first();
+            if ($tmpTuto != null){
+                $tmpUser =  DB::table('users')->whereId($tmpTuto->author_id)->first();
+                if ($tmpUser !== null) {
+                    $tmpTuto['authorName'] = $tmpUser->name;
+                } else {
+                    $tmpTuto['authorName'] = 'nobody';
+                }
+                $tutosFollow[]=$tmpTuto;
             }
         }
 
+
+
         return response()->json([
-            "followedTuto"=> $tutos,
+            "followedTuto"=> $tutosFollow,
             "authorTuto" => $tutosAuthor,
             "code" => 201]
             ,201 );
