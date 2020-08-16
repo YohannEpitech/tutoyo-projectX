@@ -1,37 +1,37 @@
 <template>
   <div>
     <navbar />
-    <router-link :to="{ name: 'Home'}">{{ $t('back') }}</router-link>
+    <router-link :to="{ name: 'Home'}">Back</router-link>
     <div class="card  m-4 p-3">
       <div class>
-        <label for="title">{{ $t('read.title') }}</label>
+        <label for="title">Title :</label>
         {{ title }}
       </div>
       <div class>
-        <label for="title">{{ $t('read.difficulty') }}:</label>
-        <span v-show="difficulty == 1">{{ $t('tuto.easy') }}</span>
-        <span v-show="difficulty == 2">{{ $t('tuto.medium') }}</span>
-        <span v-show="difficulty == 3">{{ $t('tuto.pro') }}</span>
+        <label for="title">Difficulty :</label>
+        <span v-show="difficulty == 1">Easy</span>
+        <span v-show="difficulty == 2">Medium</span>
+        <span v-show="difficulty == 3">Experimented</span>
       </div>
       <div class>
-        <label>{{ $t('read.state') }} :</label>
-        <span v-show="state == 1">{{ $t('tuto.wip') }}</span>
-        <span v-show="state == 2">{{ $t('tuto.available') }}</span>
-        <span v-show="state == 3">{{ $t('tuto.archived') }}</span>
+        <label>State :</label>
+        <span v-show="state == 1">WIP</span>
+        <span v-show="state == 2">Available</span>
+        <span v-show="state == 3">Archived</span>
       </div>
 
       <div class>
-        <label>{{ $t('read.langage') }} :</label>
+        <label>Langage :</label>
         {{ langage }}
       </div>
 
-      <label>{{ $t('read.summary') }} :</label>
+      <label>Summary :</label>
 
       <v-md-preview :text="summary"></v-md-preview>
 
-      <label>{{ $t('read.content') }} :</label>
+      <label>Content :</label>
       <v-md-preview :text="content"></v-md-preview>
-      <label>{{ $t('read.downloadFiles') }} :</label>
+      <label>Files :</label>
       <a :href="'/api/tutos/'+id+'/download'">{{ files }}</a>
     </div>
   </div>

@@ -9,7 +9,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li v-if="this.$store.state.UserData.id != undefined" class="nav-item active">
-        <router-link :to="{name: 'Home'}" >{{ $t('MenuHome') }}</router-link>
+        <router-link :to="{name: 'Home'}" >{{ $t('MenuWelcome') }}</router-link>
         <router-link to="/MyProfile">{{ $t('MenuProfile') }}</router-link>
 
       </li>

@@ -10,7 +10,7 @@
     >
 
       <div class="m-3" v-if="errors.length">
-        <b>{{ $t('errors.msgGeneral') }}</b>
+        <b>Please correct the following error(s):</b>
         <ul>
           <li v-for="error in errors" v-bind:key="error.index">{{ error }}</li>
         </ul>

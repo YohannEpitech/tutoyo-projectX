@@ -1,7 +1,8 @@
 <template>
-  <div class="tuto">
+  <div class="">
+
     <navbar/>
-    <router-link :to="{ name: 'Home'}">{{ $t('back') }}</router-link>
+    <router-link :to="{ name: 'Home'}">Back</router-link>
     <div class="card m-4 p-3">
       <form
       id='registerForm'
@@ -10,7 +11,7 @@
       >
 
 <div class="m-3" v-if="errors.length">
-        <b>{{ $t('errors.msgGeneral') }}</b>
+        <b>Please correct the following error(s):</b>
         <ul>
           <li v-for="error in errors" v-bind:key="error.index">{{ error }}</li>
         </ul>
@@ -18,7 +19,7 @@
 
 
 <div class="">
-        <label for="title">{{ $t('read.title') }} :</label>
+        <label for="title">Title :</label>
         <input
           id="title"
           v-model="title"
@@ -29,7 +30,7 @@
       </div>
 
       <div class="">
-        <label for="difficulty">{{ $t('read.difficulty') }} :</label>
+        <label for="difficulty">Difficulty :</label>
         <div class="input-group">
           <select class="custom-select" id="difficulty" v-model="difficulty">
             <option selected value="1">Easy</option>
@@ -41,9 +42,9 @@
 
 
       <div class="">
-        <label for="state">{{ $t('read.state') }} :</label>
+        <label for="state">State :</label>
         <div class="input-group">
-          <select class="custom-select" id="state" v-model="state">
+          <select class="custom-select" id="state" v-model="difficulty">
             <option selected="selected" value="1">WIP</option>
         <option value="2">Available</option>
         <option value="3">Archived</option>
@@ -52,7 +53,7 @@
       </div>
 
       <div class="">
-        <label for="langage">{{ $t('read.langage') }} :</label>
+        <label for="langage">Langage :</label>
         <div class="input-group">
           <select class="custom-select" id="langage" v-model="langage">
             <option selected="selected" value="php">PHP</option>
@@ -64,18 +65,18 @@
       </div>
 
       <div class="">
-        <label for="summary">{{ $t('read.summary') }} :</label>
+        <label for="summary">Summary :</label>
         <v-md-editor v-model="summary" height="400px"></v-md-editor>
       </div>
 
       <div class="">
-        <label for="content">{{ $t('read.content') }} :</label>
+        <label for="content">Content :</label>
         <v-md-editor v-model="content" height="800px"></v-md-editor>
       </div>
 
 
 <div class="">
-        <label for="file">{{ $t('read.uploadFiles') }} :</label>
+        <label for="file">Files :</label>
         <input
           id="file"
           type="file"
@@ -90,41 +91,57 @@
       <div class="text-right">
         <input
           type="submit"
-          value="Create"
+          value="Update"
           class="btn btn-primary mx-4"
         >
       </div>
       </form>
       </div>
     </div>
-
 </template>
 
 <script>
 import navbar from '@/components/NavBar.vue';
 
 export default {
-  name: "createTuto",
+  name: "editTuto",
   components: {
     'navbar' : navbar,
-
-
   },
   data() {
     return {
       errors:[],
       title: "",
-      difficulty: 1,
-      state: 1,
+      difficulty: "",
+      state: "",
       langage: "",
       summary: "",
       content: "",
       pathImg: "",
-      files: '',
-      filesURL:null,
-      langages:[]
+      files: "",
 
     };
+  },
+
+  mounted(){
+    fetch(`/api/tutos/${this.$route.params.id}`)
+    .then(response => response.json())
+    .then(response =>{
+      if (response.code === 200){
+        this.title= response.result.title;
+        this.difficulty= response.result.difficulty;
+        this.state = response.result.state;
+        this.langage= response.result.langage;
+        this.summary= response.result.summary;
+        this.content= response.result.content;
+        this.files = response.result.files;
+      } else {
+        throw new Error('Id tuto unknown')
+        }
+    })
+    .catch((error)=>{
+      this.errors.push(error.message);
+    })
   },
   methods: {
     checkForm(e){
@@ -146,20 +163,20 @@ export default {
         this.errors.push('Langage required.');
       }
     },
+
     onFileChanged(event){
       this.files  = event.target.files[0];
     },
-    register() {
-      let formdata = new FormData();
+    async submit() {
+      var formdata = new FormData();
       formdata.append("title", this.title);
       formdata.append("difficulty", this.difficulty);
       formdata.append("state", this.state);
-      formdata.append("author_id", this.$store.state.UserData.id);
       formdata.append("langage", this.langage);
       formdata.append("summary", this.summary);
       formdata.append("content", this.content);
-      formdata.append('files', this.files);
-      let requestOptions = {
+      // formdata.append('files', this.files);
+      var requestOptions = {
         method: "POST",
         body: formdata,
         header:{
@@ -167,8 +184,14 @@ export default {
         },
         redirect: "follow",
       };
-      fetch(`/api/tutos/create`, requestOptions);
+      let rawResponse = await fetch(
+        `/api/tutos/${this.$route.params.id}/update`,
+        requestOptions
+      );
+      let data = await rawResponse.json();
+
       this.$router.push({ name: 'Home' })
+
     },
   },
 };

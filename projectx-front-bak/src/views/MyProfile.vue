@@ -2,7 +2,7 @@
   <div class="myProfile">
     <navbar />
     <div class="card m-2">
-    <div class="card-header text-center">{{ $t('myProfileTitle') }}</div>
+    <div class="card-header text-center">My profile</div>
 
     <form
     id='profileForm'
@@ -11,14 +11,14 @@
     >
 
     <div class="m-3" v-if="errors.length">
-        <b>{{ $t('errors.msgGeneral') }}</b>
+        <b>Please correct the following error(s):</b>
         <ul>
           <li v-for="error in errors" v-bind:key="error.index">{{ error }}</li>
         </ul>
       </div>
 
 <div class="text-center">
-        <label for="username">{{ $t('sign.username') }} :</label>
+        <label for="username">Username :</label>
         <input
           id="username"
           v-model="username"
@@ -29,12 +29,12 @@
       </div>
 
  <div class="text-center">
-        <label for="password">{{ $t('sign.email') }} :</label>
+        <label for="password">Email :</label>
         {{ email }}
       </div>
 
  <div class="text-center">
-        <label for="password">{{ $t('sign.password') }} :</label>
+        <label for="password">Password :</label>
         <input
           id="password"
           v-model="password"
@@ -45,7 +45,7 @@
       </div>
 
        <div class="text-center">
-        <label for="c_password">{{ $t('sign.c_password') }}:</label>
+        <label for="c_password">Confirmation Password :</label>
         <input
           id="c_password"
           v-model="c_password"
@@ -58,7 +58,7 @@
 <div class="text-right">
         <input
           type="submit"
-          :value="$t('sign.save')"
+          value="Submit"
           class="btn btn-primary mx-4"
         >
       </div>

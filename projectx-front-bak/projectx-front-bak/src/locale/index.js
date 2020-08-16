@@ -8,7 +8,6 @@ const i18n = new VueI18n({
   messages:{
     fr:{
       MenuWelcome:"Accueil",
-      MenuHome:'Espace personnel',
       MenuProfile:'Mon profil',
       MenuLogin:'S\'identifier',
       MenuLogout:'Déconnexion',
@@ -18,16 +17,13 @@ const i18n = new VueI18n({
       MenuCreateTuto:'Création d\'un tuto',
       MenuAdminUsers:'Gestion des utilisateurs',
       MenuAdminLangages:'Gestion des langages',
-      back:'Retour',
-      myProfileTitle:"Mon profil",
       sign:{
         email : 'Email',
         password: 'Mot de passe',
-        login:'Connexion',
+        login:'Soumettre',
         logintitle:'S\'authentifer',
         signuptitle:"S'enregistrer",
         username:'Surnom',
-        save:"Sauvegarder",
         c_password:"Confirmation du mot de passe"
       },
       home:{
@@ -49,23 +45,11 @@ const i18n = new VueI18n({
         available:'Disponible',
         archived:'Archivé',
         by:'par',
-      },
-      read:{
-        title:"Titre",
-        difficulty: "Difficulté",
-        state:"Etat",
-        langage:"Langage",
-        summary:"Résumé",
-        content:"Contenu",
-        downloadFiles:"Fichier à télécharger",
-        uploadFiles:"Fichier à charger"
-
       }
 
     },
     en:{
       MenuWelcome:'Welcome',
-      MenuHome:'Home',
       MenuProfile:'My profile',
       MenuLogin:'Sign-in',
       MenuLogout:'Logout',
@@ -75,8 +59,6 @@ const i18n = new VueI18n({
       MenuAdminUsers:'Manage users',
       MenuAdminLangages:'Manage lanages',
       MenuCreateTuto:'Create tuto',
-      back:'Back',
-      myProfileTitle:"My profile",
       sign:{
         email : 'Email',
         password: 'Password',
@@ -84,7 +66,6 @@ const i18n = new VueI18n({
         logintitle:'Login',
         username:'Username',
         signuptitle:"Sign-up",
-        save:"Save",
         c_password:"Password confirmation"
       },
       home:{
@@ -107,23 +88,6 @@ const i18n = new VueI18n({
         archived:'Archived',
         by:'by',
 
-      },
-      read:{
-        title:"Title",
-        difficulty: "Difficulty",
-        state:"State",
-        langage:"Langage",
-        summary:"Summary",
-        content:"Content",
-        downloadFiles:"File to download",
-        uploadFiles:"File to upload"
-      },
-      errors:{
-        noTitle:'Title required',
-        noState:'State required',
-        noDifficulty:'Difficulty required',
-        noLangage:'Langage required',
-        msgGeneral:'Please correct the following error(s):'
       }
 
 

@@ -2,7 +2,7 @@
   <div class="">
 
     <navbar/>
-    <router-link :to="{ name: 'Home'}">Back</router-link>
+    <router-link :to="{ name: 'Home'}">{{ $t('back') }}</router-link>
     <div class="card m-4 p-3">
       <form
       id='registerForm'
@@ -11,7 +11,7 @@
       >
 
 <div class="m-3" v-if="errors.length">
-        <b>Please correct the following error(s):</b>
+        <b>{{ $t('errors.msgGeneral') }}</b>
         <ul>
           <li v-for="error in errors" v-bind:key="error.index">{{ error }}</li>
         </ul>
@@ -19,7 +19,7 @@
 
 
 <div class="">
-        <label for="title">Title :</label>
+        <label for="title">{{ $t('read.title') }} :</label>
         <input
           id="title"
           v-model="title"
@@ -30,7 +30,7 @@
       </div>
 
       <div class="">
-        <label for="difficulty">Difficulty :</label>
+        <label for="difficulty">{{ $t('read.difficulty') }} :</label>
         <div class="input-group">
           <select class="custom-select" id="difficulty" v-model="difficulty">
             <option selected value="1">Easy</option>
@@ -42,7 +42,7 @@
 
 
       <div class="">
-        <label for="state">State :</label>
+        <label for="state">{{ $t('read.state') }} :</label>
         <div class="input-group">
           <select class="custom-select" id="state" v-model="difficulty">
             <option selected="selected" value="1">WIP</option>
@@ -53,7 +53,7 @@
       </div>
 
       <div class="">
-        <label for="langage">Langage :</label>
+        <label for="langage">{{ $t('read.langage') }} :</label>
         <div class="input-group">
           <select class="custom-select" id="langage" v-model="langage">
             <option selected="selected" value="php">PHP</option>
@@ -65,18 +65,18 @@
       </div>
 
       <div class="">
-        <label for="summary">Summary :</label>
+        <label for="summary">{{ $t('read.summary') }} :</label>
         <v-md-editor v-model="summary" height="400px"></v-md-editor>
       </div>
 
       <div class="">
-        <label for="content">Content :</label>
+        <label for="content">{{ $t('read.content') }} :</label>
         <v-md-editor v-model="content" height="800px"></v-md-editor>
       </div>
 
 
 <div class="">
-        <label for="file">Files :</label>
+        <label for="file">{{ $t('read.uploadFiles') }} :</label>
         <input
           id="file"
           type="file"
