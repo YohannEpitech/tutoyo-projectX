@@ -34,7 +34,6 @@ class TutoController extends Controller
             'content' => 'string',
             'files'     =>  'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-        return dd($validator);
 
         if ($validator->fails()){
             return response()->json([
@@ -66,7 +65,6 @@ class TutoController extends Controller
 
             'summary'=>$request['summary'],
             'content'=>$request['content'],
-            'pathImg'=>$request['pathImg'],
             'ratings'=>$request['ratings'],
             'nb_ratings'=>$request['nb_ratings'],
             'files'=>$filePath,

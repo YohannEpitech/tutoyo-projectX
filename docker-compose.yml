@@ -3,10 +3,10 @@ version: '3.3'
 services:
     www:
         image: nginx:alpine
-        volumes:
-          - ./www/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+        # volumes:
+        #   - ./www/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
         ports:
-          - 81:80
+          - 80:80
         depends_on:
           - backend
           - frontend
@@ -15,8 +15,8 @@ services:
         build:
             context: ./projectx-back
         user: 1000:1000
-        volumes:
-            - ./projectx-back:/usr/src/projectx-backend:rw
+        # volumes:
+        #     - ./projectx-back:/usr/src/projectx-backend:rw
         environment:
             DB_NAME: projectx
             DB_PASSWORD: password
@@ -30,8 +30,8 @@ services:
             MYSQL_DATABASE: projectx
             MYSQL_USER: my_shop
             MYSQL_PASSWORD: password
-        volumes:
-            - /home/yobar/projectx/db:/var/lib/mysql:rw
+        # volumes:
+        #     - /home/yobar/projectx/db:/var/lib/mysql:rw
 
     frontend:
         image: node

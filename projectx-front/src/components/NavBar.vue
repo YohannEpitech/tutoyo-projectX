@@ -58,7 +58,16 @@ components:{
     methods: {
       search() {
         if (this.value === "") {
-          fetch(`/api/tutos`)
+          let requestOptions = {
+            method: 'POST',
+            body: formdata,
+            header:{
+              'Authorization': 'Bearer '+this.$store.state.token,
+              'Accept': 'application/json',
+            },
+            redirect: 'follow'
+          };
+          fetch(`/api/tutos`,requestOptions)
           .then(response => response.json())
           .then(response =>{
             this.$parent.lists = response;
@@ -75,7 +84,7 @@ components:{
             },
             redirect: 'follow'
           };
-          fetch('/api/tutos/search')
+          fetch('/api/tutos/search',requestOptions)
           .then(response => response.json())
           .then(response => {
             this.$parent.lists = response.result;

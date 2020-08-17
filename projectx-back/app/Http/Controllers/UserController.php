@@ -137,7 +137,9 @@ class UserController extends Controller
         if ($request['follow_tutos'] != null){
             $user->follow_tutos = serialize($request['follow_tutos']);
         }
-        $user->role = $request['role'];
+        if ($request['follow_tutos'] != null){
+            $user->role = $request['role'];
+        }
         $user->save();
 
         return response()->json([

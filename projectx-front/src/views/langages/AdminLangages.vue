@@ -1,10 +1,12 @@
 <template>
-  <div class="home">
-        <navbar/>
+  <div>
+    <navbar/>
 
-   <h1>Admin Langage</h1>
-   <div v-for="langage in langageList" v-bind:key="langage.id">
-      <indexUser :datas="langage" v-on:update-langage="updateLangage"/>
+    <h1>Admin Langage</h1>
+    <button class="btn btn-success mr-3" @click="add" > Add langage </button>
+
+    <div v-for="langage in langageList" v-bind:key="langage.id">
+      <indexLangage :datas="langage" v-on:update-langage="updateLangage"/>
     </div>
   </div>
 </template>
@@ -25,23 +27,23 @@ export default {
 
     }
   },
-  mounted(){
+  created(){
     this.initData();
   },
   methods:{
-    updateLangage($userId){
-      let formdata = new FormData();
-      formdata.append("role", $newRole);
-      var requestOptions = {
-        method: "POST",
-        body: formdata,
+    add(){
+
+    },
+    updateLangage($id, $name, $img){
+      console.log(`?name=${$name}&imgName=${img.name}`)
+     let requestOptions = {
+        method: "PUT",
         header:{
           'Authorization': this.$store.state.token,
         },
         redirect: "follow",
       };
-      fetch(
-        `/api/users/${$userId}/update`,
+      fetch(`/api/langages/${$id}?name=${$name}&imgName=${img}`,
         requestOptions
       );
 
@@ -51,7 +53,7 @@ export default {
       fetch(`/api/langages`)
       .then(response=> response.json())
       .then(response =>{
-        this.lanageList = response;
+        this.langageList = response;
       });
     }
   }

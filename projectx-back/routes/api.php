@@ -30,17 +30,13 @@ Route::post('/users/me/tutos/delete', 'UserController@del');
 
 Route::post('/tutos/search', 'TutoController@search');
 
+Route::get('/tutos', 'TutoController@index');
 Route::post('/tutos/create', 'TutoController@store');
 Route::get('/tutos/{id}', 'TutoController@show');
 Route::post('/tutos/{id}/destroy', 'TutoController@destroy');
 Route::post('/tutos/{id}/update', 'TutoController@update');
 Route::get('/tutos/{id}/download', 'TutoController@download');
 Route::get('/tutos/{id}/archive', 'TutoController@archive');
-
-
-
-
-Route::get('/tutos', 'TutoController@index');
 
 Route::resource('langages', 'LangageController');
 

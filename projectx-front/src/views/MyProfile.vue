@@ -135,10 +135,7 @@ export default {
         redirect: "follow",
       };
 
-      fetch(
-        `/api/users/${this.$store.state.UserData.id}/update`,
-        requestOptions
-      );
+      fetch(`/api/users/${this.$store.state.UserData.id}/update`,requestOptions);
 
       this.$router.push({ name: "Home" });
       }

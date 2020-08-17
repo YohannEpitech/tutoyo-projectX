@@ -1,17 +1,19 @@
 <template>
   <div class="indexTuto card m-3">
-      {{ datas.username }}
-      {{ datas.email }}
-    <h1>Role</h1>
-    <div class="input-group">
-      <select class="custom-select" id="role" v-model="datas.role">
-        <option value="0">Student</option>
-        <option value="1">Prof</option>
-        <option value="2">Admin</option>
-      </select>
-      </div>
+      <input type="text" v-model="name" >
+        <!-- <label for="img">{{ $t('read.langageImg') }} :</label> -->
+        <input
+          id="img"
+          type="file"
+          name="img"
+          class="mx-2 mt-2"
+          accept="image/jpeg, image/png"
+          @change="onFileChanged"
+          aria-describedby="file"
+        >
+     
     <div class="card-footer">
-      <button class="btn btn-success mr-3" @click="edit" > Edit </button>
+       <button class="btn btn-success mr-3" @click="update" > Save </button>
     </div>
   </div>
 </template>
@@ -24,13 +26,25 @@ export default {
     navbar: navbar,
   },
   props: {
-    msg: String,
-    typeIndex: Number,
-    datas: {}
+   datas: {}
+  },
+  data(){
+    return {
+      name:'',
+      imgName:''
+    }
+  },
+  mounted(){
+    this.name = this.datas.name,
+    this.imgName = this.datas.imgName
   },
   methods: {
-    edit(){
-      this.$emit('edit-langage',this.datas.id)
+    onFileChanged(event){
+      this.imgName  = event.target.files[0].name;
+    },
+    update(){
+      console.log(this.imgName)
+      this.$emit('update-langage',this.datas.id, this.name, this.imgName)
     },
 
   },
