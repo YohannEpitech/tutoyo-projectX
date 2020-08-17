@@ -53,7 +53,7 @@
         <label for="c_password">{{ $t('sign.c_password') }} :</label>
         <input
           id="c_password"
-          :v-model="c_password"
+          v-model="c_password"
           type="text"
           name="c_password"
           class="mx-2"
