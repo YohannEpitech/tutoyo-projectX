@@ -32,10 +32,10 @@
 
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <div class="form-inline ">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" @input="search"
                                                                                  v-model="value">
-    </form>
+    </div>
   </div>
 </nav>
 
@@ -59,8 +59,7 @@ components:{
       search() {
         if (this.value === "") {
           let requestOptions = {
-            method: 'POST',
-            body: formdata,
+            method: 'GET',
             header:{
               'Authorization': 'Bearer '+this.$store.state.token,
               'Accept': 'application/json',
