@@ -43,7 +43,7 @@
         <input
           id="password"
           v-model="password"
-          type="text"
+          type="password"
           name="password"
           class="mx-2"
         >
@@ -54,7 +54,7 @@
         <input
           id="c_password"
           v-model="c_password"
-          type="text"
+          type="password"
           name="c_password"
           class="mx-2"
         >
