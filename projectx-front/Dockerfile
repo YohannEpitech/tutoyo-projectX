@@ -7,6 +7,5 @@ COPY package-lock.json /usr/src/projectx-front/
 WORKDIR /usr/src/projectx-front/
 RUN npm install
 COPY . /usr/src/projectx-front/
-COPY webpack.mix.js /usr/src/projectx-front/
 
 RUN npm run serve
