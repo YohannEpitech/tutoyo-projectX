@@ -8,4 +8,4 @@ WORKDIR /usr/src/projectx-front/
 RUN npm install
 COPY . /usr/src/projectx-front/
 
-RUN npm run serve
+RUN npm run build
