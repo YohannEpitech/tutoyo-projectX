@@ -20,23 +20,28 @@
       <div v-if="typeIndex == '1'">
         <div v-if="this.$store.state.UserData.id != undefined">
           <div v-if="datas.author_id == this.$store.state.UserData.id ">
-            <router-link :to="'/tutos/'+datas.id">{{ $t('tuto.edit') }}</router-link>
+            <router-link class="btn btn-primary" :to="'/tutos/'+datas.id">{{ $t('tuto.edit') }}</router-link>
           </div>
           <div v-else>
-            <button v-on:click="addTuto">{{ $t('tuto.follow') }}</button>
+          <div v-if="datas.id in this.$store.state.UserData.follow_tutos">
+            <button class="btn btn-primary" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
+          </div>
+          <div v-else>
+            <button class="btn btn-primary"  v-on:click="addTuto">{{ $t('tuto.follow') }}</button>
           </div>
         </div>
+          </div>
       </div>
 
       <div v-else-if="typeIndex == '2'">
         <div v-if="datas.author_id == this.$store.state.UserData.id ">
-            <router-link :to="'/tutos/'+datas.id">{{ $t('tuto.edit') }}</router-link>
-            <router-link :to="'/tutos/'+datas.id+'/read'">{{ $t('tuto.read') }}</router-link>
-          <span v-if="datas.state != 3"><a :href="'/api/tutos/'+datas.id+'/archive'">{{ $t('tuto.archive') }}</a ></span>
+            <router-link class="btn btn-primary mx-3" :to="'/tutos/'+datas.id" >{{ $t('tuto.edit') }}</router-link>
+            <router-link class="btn btn-primary mx-3" :to="'/tutos/'+datas.id+'/read'" >{{ $t('tuto.read') }}</router-link>
+          <span v-if="datas.state != 3"><a class="btn btn-primary mx-3" :href="'/api/tutos/'+datas.id+'/archive'">{{ $t('tuto.archive') }}</a ></span>
         </div>
         <div v-else>
-          <button v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
-          <router-link :to="'/tutos/'+datas.id+'/read'">{{ $t('tuto.read') }}</router-link>
+          <button class="btn btn-primary mx-3" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
+          <router-link  class="btn btn-primary mx-3"  :to="'/tutos/'+datas.id+'/read'">{{ $t('tuto.read') }}</router-link>
         </div>
       </div>
 
@@ -100,7 +105,7 @@ export default {
       .then(response => response.json())
       .then(response => {
         this.$store.state.UserData = response;
-                this.$emit('update-content')
+        this.$emit('update-content')
 
       });
     },

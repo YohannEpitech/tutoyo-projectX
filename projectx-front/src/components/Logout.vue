@@ -9,7 +9,7 @@ export default {
   name: 'Logout',
   created(){
     let formdata = new FormData();
-      formdata.append("id", this.$store.state.UserData.id);
+    formdata.append("id", this.$store.state.UserData.id);
     let requestOptions = {
           method: 'POST',
           body: formdata,

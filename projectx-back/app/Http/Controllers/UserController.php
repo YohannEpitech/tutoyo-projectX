@@ -64,9 +64,7 @@ class UserController extends Controller
     }
 
     function logout(Request $request){
-        $user =  User::whereId($request->id)->first();
-        $user->api_token = '';
-        $user->save();
+
         return response()->json([
             "code" => 201,
             "message" => 'successfully logout']
