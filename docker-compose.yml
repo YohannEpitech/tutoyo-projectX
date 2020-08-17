@@ -3,6 +3,8 @@ version: '3.3'
 services:
     www:
         image: nginx:alpine
+        copy:
+            - ./www/nginx/default.conf:/etc/nginx/conf.d/default.conf
         # volumes:
         #   - ./www/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
         ports:
@@ -15,6 +17,8 @@ services:
         build:
             context: ./projectx-back
         user: 1000:1000
+        copy:
+             - ./projectx-back:/usr/src/projectx-backend
         # volumes:
         #     - ./projectx-back:/usr/src/projectx-backend:rw
         environment:
@@ -37,8 +41,10 @@ services:
         image: node
         user: 1000:1000
         working_dir: /app
-        volumes:
+        copy:
             - ./projectx-front:/app
+        # volumes:
+        #     - ./projectx-front:/app
         environment:
             NODE_ENV: development
         command: "npm run serve"
