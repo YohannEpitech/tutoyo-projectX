@@ -99,8 +99,9 @@ export default {
       fetch(`/api/users/me/tutos/delete`,requestOptions)
       .then(response => response.json())
       .then(response => {
-        this.$store.state.UserData = data;
-        this.$emit('del-content')
+        this.$store.state.UserData = response;
+                this.$emit('update-content')
+
       });
     },
   },

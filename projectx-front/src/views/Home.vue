@@ -12,7 +12,7 @@
     <h2>{{ $t('home.followtutos') }}</h2>
     <div v-if="listsFollow.length == 0">{{ $t('home.empty') }}</div>
     <div v-for="tuto in listsFollow" v-bind:key="tuto.id">
-      <indextuto :typeIndex="2" :datas="tuto" v-on:update-content="updateList"/>
+      <indextuto :typeIndex="2" :datas="tuto" v-on:update-content="updateList" />
     </div>
   </div>
 </template>
@@ -44,6 +44,7 @@ export default {
     updateList(){
       this.initData();
     },
+    
     initData() {
       fetch(`/api/users/${this.$store.state.UserData.id}/tutos`)
       .then(response => response.json())

@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <navbar/>
+    
     <div  v-for="tuto in lists" v-bind:key="tuto.id">
         <indextuto :typeIndex="1" :datas="tuto"/>
       </div>
