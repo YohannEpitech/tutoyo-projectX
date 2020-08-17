@@ -1,16 +1,8 @@
 <template>
-  <div class="indexTuto card m-3">
+  <div class="indexTuto card m-3 " style="max-width:10rem;">
       <input type="text" v-model="name" >
-        <!-- <label for="img">{{ $t('read.langageImg') }} :</label> -->
-        <input
-          id="img"
-          type="file"
-          name="img"
-          class="mx-2 mt-2"
-          accept="image/jpeg, image/png"
-          @change="onFileChanged"
-          aria-describedby="file"
-        >
+        <img :src="getImgUrl(imgName)"  alt="img langage"  width="100"  />
+    
      
     <div class="card-footer">
        <button class="btn btn-success mr-3" @click="update" > Save </button>
@@ -39,12 +31,16 @@ export default {
     this.imgName = this.datas.imgName
   },
   methods: {
+    getImgUrl(pic){
+      return require('@/assets/'+pic);
+    },
     onFileChanged(event){
-      this.imgName  = event.target.files[0].name;
+      this.imgFullName  = event.target.files[0].name;
+
     },
     update(){
-      console.log(this.imgName)
-      this.$emit('update-langage',this.datas.id, this.name, this.imgName)
+      console.log(this.imgFullName)
+      this.$emit('update-langage',this.datas.id, this.name, this.imgFullName)
     },
 
   },

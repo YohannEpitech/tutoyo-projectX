@@ -80,6 +80,11 @@ export default {
         });
     }
   },
+  mounted(){
+    if (this.$store.state.UserData.id == undefined ){
+      this.$router.push({ name: 'Welcome' })
+    }
+  },
   methods: {
     downloadFile() {
       let formdata = new FormData();

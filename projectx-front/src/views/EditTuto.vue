@@ -143,6 +143,14 @@ export default {
       this.errors.push(error.message);
     })
   },
+  mounted(){
+    if (this.$store.state.UserData.id == undefined ){
+      this.$router.push({ name: 'Welcome' })
+    }
+    if (this.$store.state.UserData.role <= 1 ){
+      this.$router.push({ name: 'Home' })
+    }
+  },
   methods: {
     checkForm(e){
       e.preventDefault();

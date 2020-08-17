@@ -28,6 +28,14 @@ export default {
   created(){
     this.initData();
   },
+  mounted(){
+    if (this.$store.state.UserData.id == undefined ){
+      this.$router.push({ name: 'Welcome' })
+    }
+    if (this.$store.state.UserData.role != 2 ){
+      this.$router.push({ name: 'Home' })
+    }
+  },
   methods:{
     updateUser($userId, $newRole){
       let formdata = new FormData();

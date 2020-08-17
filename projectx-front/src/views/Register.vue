@@ -93,6 +93,11 @@ export default {
       this.$router.push({ name: 'Home' })
     }
   },
+  mounted(){
+    if (this.$store.state.UserData.id == undefined ){
+      this.$router.push({ name: 'Welcome' })
+    }
+  },
   methods:{
     checkForm(e){
       e.preventDefault();

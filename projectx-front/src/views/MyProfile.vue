@@ -101,6 +101,11 @@ export default {
       })
     }
   },
+  mounted(){
+    if (this.$store.state.UserData.id == undefined ){
+      this.$router.push({ name: 'Welcome' })
+    }
+  },
   methods: {
     checkForm(e){
       e.preventDefault();
@@ -134,7 +139,7 @@ export default {
         },
         redirect: "follow",
       };
-
+      localStorage.setItem("state", JSON.stringify(this.state));
       fetch(`/api/users/${this.$store.state.UserData.id}/update`,requestOptions);
 
       this.$router.push({ name: "Home" });

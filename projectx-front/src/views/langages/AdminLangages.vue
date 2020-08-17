@@ -3,9 +3,9 @@
     <navbar/>
 
     <h1>Admin Langage</h1>
-    <button class="btn btn-success mr-3" @click="add" > Add langage </button>
+    <!-- <button class="btn btn-success mr-3" @click="add" > Add langage </button> -->
 
-    <div v-for="langage in langageList" v-bind:key="langage.id">
+    <div class="card-group" v-for="langage in langageList" v-bind:key="langage.id">
       <indexLangage :datas="langage" v-on:update-langage="updateLangage"/>
     </div>
   </div>
@@ -30,12 +30,19 @@ export default {
   created(){
     this.initData();
   },
+  mounted(){
+    if (this.$store.state.UserData.id == undefined ){
+      this.$router.push({ name: 'Welcome' })
+    }
+    if (this.$store.state.UserData.role != 2 ){
+      this.$router.push({ name: 'Home' })
+    }
+  },
   methods:{
     add(){
 
     },
-    updateLangage($id, $name, $img){
-      console.log(`?name=${$name}&imgName=${img.name}`)
+    updateLangage($id, $name, $imgFull){
      let requestOptions = {
         method: "PUT",
         header:{

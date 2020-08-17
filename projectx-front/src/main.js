@@ -26,8 +26,13 @@ Vue.use(VueMarkdownEditor);
 
 
 new Vue({
-  router,
-  i18n,
-  store,
-  render: function (h) { return h(App) }
+    router,
+    i18n,
+    store,
+    beforeCreate() {
+        this.$store.commit('initData')
+    },
+    render: function(h) {
+        return h(App)
+    }
 }).$mount('#app')

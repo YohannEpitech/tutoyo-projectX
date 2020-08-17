@@ -25,6 +25,8 @@ export default {
     let date= new Date(Date.now()-60*60*100);
     let expireDate = date.toUTCString();
     document.cookie=`token=;path=/;expires=${expireDate};samesite=lax`;
+    localStorage.removeItem("state");
+
     this.$router.push({name:'Welcome'});
   }
 }
