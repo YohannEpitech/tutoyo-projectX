@@ -16,7 +16,6 @@ services:
         restart: always
         build:
             context: ./projectx-back
-        # user: 1000:1000
         environment:
             DB_NAME: projectx
             DB_PASSWORD: password
@@ -38,4 +37,3 @@ services:
         restart: always
         build:
             context: ./projectx-front
-        # user: 1000:1000
