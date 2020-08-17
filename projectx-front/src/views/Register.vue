@@ -38,12 +38,12 @@
         >
       </div>
 
- <div class="text-center">
+      <div class="text-center">
         <label for="password">{{ $t('sign.password') }} :</label>
         <input
           id="password"
           v-model="password"
-          type="password"
+          type="text"
           name="password"
           class="mx-2"
         >
@@ -54,7 +54,7 @@
         <input
           id="c_password"
           :v-model="c_password"
-          type="password"
+          type="text"
           name="c_password"
           class="mx-2"
         >
@@ -88,7 +88,7 @@ export default {
       c_password:null
     }
   },
-  mounted(){
+  created(){
     if (this.$store.state.UserData.id != undefined){
       this.$router.push({ name: 'Home' })
     }
@@ -96,7 +96,7 @@ export default {
   methods:{
     checkForm(e){
       e.preventDefault();
-      if (this.username && this.email && this.password && (this.password === this.c_password)) {
+      if (this.username && this.email && this.password && (this.password == this.c_password)) {
         this.register();
       }
       this.errors = [];
@@ -109,24 +109,26 @@ export default {
       if (!this.password) {
         this.errors.push('Password required.');
       }
-      if (!this.c_password) {
-        this.errors.push('Password required.');
-      }
-      if (this.password && this.password != this.c_password) {
+      
+      if (this.password && (this.password != this.c_password)) {
         this.errors.push('Passwords don t match.');
       }
     },
     register(){
 
-      if (this.c_password === this.password){
-        var formdata = new FormData();
+      if (this.c_password == this.password){
+        let formdata = new FormData();
         formdata.append("username", this.username);
         formdata.append("email", this.email);
         formdata.append("password", this.password);
 
-        var requestOptions = {
+        let requestOptions = {
           method: 'POST',
           body: formdata,
+          header:{
+            'Authorization': 'Bearer '+this.$store.state.token,
+            'Accept': 'application/json',
+          },
           redirect: 'follow'
         };
 

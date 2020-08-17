@@ -62,40 +62,46 @@ export default {
     getImgUrl(pic){
       return require('@/assets/'+pic+'.png');
     },
-    async addTuto() {
-      var formdata = new FormData();
+    addTuto() {
+      let formdata = new FormData();
       formdata.append("me", this.$store.state.UserData.id);
       formdata.append("addTutoId", this.datas.id);
-      var requestOptions = {
+      let requestOptions = {
         method: "POST",
+        header:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
         body: formdata,
         redirect: "follow",
       };
-      let rawResponse = await fetch(
-        `/api/users/me/tutos/add`,
-        requestOptions
-      );
-      let data = await rawResponse.json();
-
-      this.$store.state.UserData = data;
-      this.$emit('update-content')
+      fetch(`/api/users/me/tutos/add`,requestOptions)
+      .then(response => response.json())
+      .then(response =>{
+        this.$store.state.UserData = response;
+        this.$emit('update-content')
+      })
+      
     },
-    async delTuto() {
-      var formdata = new FormData();
+    delTuto() {
+      let formdata = new FormData();
       formdata.append("me", this.$store.state.UserData.id);
       formdata.append("delTutoId", this.datas.id);
-      var requestOptions = {
+      let requestOptions = {
         method: "POST",
+        header:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
         body: formdata,
         redirect: "follow",
       };
-      let rawResponse = await fetch(
-        `/api/users/me/tutos/delete`,
-        requestOptions
-      );
-      let data = await rawResponse.json();
-      this.$store.state.UserData = data;
-      this.$emit('update-content')
+      fetch(`/api/users/me/tutos/delete`,requestOptions)
+      .then(response => response.json())
+      .then(response => {
+        this.$store.state.UserData = data;
+        this.$emit('del-content')
+      });
     },
   },
 };

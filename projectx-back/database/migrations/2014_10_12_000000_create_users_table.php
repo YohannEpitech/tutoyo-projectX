@@ -20,8 +20,12 @@ class CreateUsersTable extends Migration
             $table->integer('role')->default(0);
             $table->string('follow_tutos')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-
             $table->string('password');
+
+            $table->string('api_token', 80)
+                    ->unique()
+                    ->nullable()
+                    ->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

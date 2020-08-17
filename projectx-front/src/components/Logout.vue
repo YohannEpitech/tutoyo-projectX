@@ -7,17 +7,19 @@
 <script>
 export default {
   name: 'Logout',
-  async mounted(){
+  created(){
     let formdata = new FormData();
       formdata.append("id", this.$store.state.UserData.id);
-    var requestOptions = {
+    let requestOptions = {
           method: 'POST',
           body: formdata,
-
+          header:{
+            'Authorization': 'Bearer '+this.$store.state.token,
+            'Accept': 'application/json',
+          },
           redirect: 'follow'
         };
-    let rawResponse = await fetch("/api/logout", requestOptions)
-    let data = await rawResponse.json();
+    fetch("/api/logout", requestOptions);
     this.$store.state.UserData = {};
     this.$store.state.token = '';
     let date= new Date(Date.now()-60*60*100);

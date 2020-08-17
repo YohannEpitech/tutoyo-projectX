@@ -56,16 +56,30 @@ components:{
       };
     },
     methods: {
-      async search() {
+      search() {
         if (this.value === "") {
-          let rawResponse = await fetch(`/api/tutos`);
-          let data = await rawResponse.json();
-          this.$parent.lists = data;
+          fetch(`/api/tutos`)
+          .then(response => response.json())
+          .then(response =>{
+            this.$parent.lists = response;
+          });
         } else {
-          let searchValue = this.value;
-          let rawResponse = await fetch('/api/tutos/search/' + searchValue)
-          let data = await rawResponse.json();
-          this.$parent.lists = data.result;
+          let formdata = new FormData();
+          formdata.append("searchField", this.value);
+          let requestOptions = {
+            method: 'POST',
+            body: formdata,
+            header:{
+              'Authorization': 'Bearer '+this.$store.state.token,
+              'Accept': 'application/json',
+            },
+            redirect: 'follow'
+          };
+          fetch('/api/tutos/search')
+          .then(response => response.json())
+          .then(response => {
+            this.$parent.lists = response.result;
+          })          
         }
       },
 

@@ -204,7 +204,9 @@ class TutoController extends Controller
     }
 
     function search(Request $request){
-        $tutos =  Tuto::where('title','like','%'.$request['searchField'].'%')->get();
+        $tutos =  Tuto::where('title','like','%'.$request['searchField'].'%')
+                    ->orWhere('langage','like','%'.$request['searchField'].'%')
+                    ->get();
 
         if (count($tutos) ==0){
             return response()->json([
@@ -215,7 +217,13 @@ class TutoController extends Controller
         }
 
         foreach ($tutos as $tuto){
-            $tuto['authorName'] =  DB::table('users')->whereId($tuto->author_id)->first()->name;
+
+            $tmpUser= DB::table('users')->whereId($tuto->author_id)->first();
+            if ($tmpUser !== null) {
+                $tuto['authorName'] = $tmpUser->name;
+            } else {
+                $tuto['authorName'] = 'nobody';
+            }
         }
         return response()->json([
             "code" => 200,

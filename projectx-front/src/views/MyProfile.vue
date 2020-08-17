@@ -84,7 +84,7 @@ export default {
       c_password: "",
     };
   },
-  async mounted() {
+  created() {
     if (typeof(this.$store.state.UserData.id) == undefined) {
       this.$router.push({ name: "Welcome" });
     } else {
@@ -115,7 +115,7 @@ export default {
         this.errors.push('Passwords don t match.');
       }
     },
-    async update() {
+    update() {
       var formdata = new FormData();
       if (this.username != this.$store.state.UserData.name) {
         formdata.append("username", this.username);
@@ -129,7 +129,8 @@ export default {
         method: "POST",
         body: formdata,
         header:{
-          'Authorization': this.$store.state.token,
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json'
         },
         redirect: "follow",
       };

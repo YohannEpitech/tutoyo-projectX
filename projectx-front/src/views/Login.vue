@@ -66,7 +66,7 @@ export default {
       follow_tutos:[]
     }
   },
-  mounted(){
+  created(){
     if (this.$store.state.UserData.id != undefined){
       this.$router.push({ name: 'Home' })
     }
@@ -93,6 +93,10 @@ export default {
       let requestOptions = {
         method: 'POST',
         body: formdata,
+        header:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
         redirect: 'follow'
       };
       fetch("/api/login", requestOptions)
@@ -102,11 +106,11 @@ export default {
           this.$store.state.UserData=response.result;
           let date= new Date(Date.now()+60*60*100);
           let expireDate = date.toUTCString();
-          this.$store.state.token = response.result.token;
-          document.cookie=`token=${response.result.token};path=/;expires=${expireDate};samesite=lax`;
+          this.$store.state.token = response.result.api_token;
+          document.cookie=`token=${response.result.api_token};path=/;expires=${expireDate};samesite=lax`;
           this.$router.push({ name: 'Home' })
         } else if (response.code === 404){
-          throw new Error('User unknow or credentials dont matched')
+          throw new Error('User unknown or credentials dont matched')
         }
       })
       .catch((error)=>{

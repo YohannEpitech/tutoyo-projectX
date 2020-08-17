@@ -25,14 +25,14 @@ export default {
 
     }
   },
-  mounted(){
+  created(){
     this.initData();
   },
   methods:{
     updateUser($userId, $newRole){
       let formdata = new FormData();
       formdata.append("role", $newRole);
-      var requestOptions = {
+      let requestOptions = {
         method: "POST",
         body: formdata,
         header:{

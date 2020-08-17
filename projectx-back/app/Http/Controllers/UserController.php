@@ -48,14 +48,14 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)){
             $user =  User::whereId(Auth::user()->id)->first();
-            $user->remember_token = Str::uuid()->toString();
+            $user->api_token = Str::random(60);
             $user->save();
             $user->follow_tutos = unserialize($user->follow_tutos);
             return response()->json([
                 "code" => 201,
                 "message" => 'Successfully login',
                 "result" =>$user,
-                "token" => $user->remember_token]
+                "token" => $user->api_token]
             );
         }
         return response()->json([
@@ -65,7 +65,7 @@ class UserController extends Controller
 
     function logout(Request $request){
         $user =  User::whereId($request->id)->first();
-        $user->remember_token = '';
+        $user->api_token = '';
         $user->save();
         return response()->json([
             "code" => 201,

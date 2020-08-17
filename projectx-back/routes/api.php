@@ -28,6 +28,7 @@ Route::get('/users/{id}/tutos', 'UserController@myTutos');
 Route::post('/users/me/tutos/add', 'UserController@add');
 Route::post('/users/me/tutos/delete', 'UserController@del');
 
+Route::post('/tutos/search', 'TutoController@search');
 
 Route::post('/tutos/create', 'TutoController@store');
 Route::get('/tutos/{id}', 'TutoController@show');
@@ -37,7 +38,7 @@ Route::get('/tutos/{id}/download', 'TutoController@download');
 Route::get('/tutos/{id}/archive', 'TutoController@archive');
 
 
-Route::get('/tutos/search/{searchField}', 'TutoController@search');
+
 
 Route::get('/tutos', 'TutoController@index');
 

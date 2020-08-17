@@ -59,7 +59,7 @@ export default {
     };
   },
 
-  async mounted() {
+  created() {
     if (this.$store.state.UserData.id == undefined) {
       this.$router.push({ name: "Welcome" });
     } else {
@@ -81,17 +81,19 @@ export default {
     }
   },
   methods: {
-    async downloadFile() {
-      var formdata = new FormData();
+    downloadFile() {
+      let formdata = new FormData();
       formdata.append("files", this.files);
-      var requestOptions = {
+      let requestOptions = {
         method: "GET",
         body: formdata,
+        header:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
         redirect: "follow",
       };
-      let rawResponse = await fetch(
-        `/api/tutos/${this.$route.params.id}/download`
-      );
+      fetch(`/api/tutos/${this.$route.params.id}/download`);
     },
   },
 };

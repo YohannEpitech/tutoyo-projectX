@@ -44,14 +44,13 @@ export default {
     updateList(){
       this.initData();
     },
-    async initData() {
-      let rawResponse = await fetch(
-        `/api/users/${this.$store.state.UserData.id}/tutos`
-      );
-      let data = await rawResponse.json();
-      this.listsFollow = data.followedTuto;
-      console.log(this.listsFollow)
-      this.listsOwner = data.authorTuto;
+    initData() {
+      fetch(`/api/users/${this.$store.state.UserData.id}/tutos`)
+      .then(response => response.json())
+      .then(response =>{
+        this.listsFollow = response.followedTuto;
+        this.listsOwner = response.authorTuto;
+      })
     },
   },
 };

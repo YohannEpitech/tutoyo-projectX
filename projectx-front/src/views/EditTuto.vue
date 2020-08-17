@@ -123,7 +123,7 @@ export default {
     };
   },
 
-  mounted(){
+  created(){
     fetch(`/api/tutos/${this.$route.params.id}`)
     .then(response => response.json())
     .then(response =>{
@@ -167,28 +167,25 @@ export default {
     onFileChanged(event){
       this.files  = event.target.files[0];
     },
-    async submit() {
-      var formdata = new FormData();
+    submit() {
+      let formdata = new FormData();
       formdata.append("title", this.title);
       formdata.append("difficulty", this.difficulty);
       formdata.append("state", this.state);
       formdata.append("langage", this.langage);
       formdata.append("summary", this.summary);
       formdata.append("content", this.content);
-      // formdata.append('files', this.files);
-      var requestOptions = {
+      formdata.append('files', this.files);
+      let requestOptions = {
         method: "POST",
         body: formdata,
         header:{
-          'Authorization': this.$store.state.token,
+          'Authorization': 'Bearer '+this.$store.state.token,
         },
         redirect: "follow",
       };
-      let rawResponse = await fetch(
-        `/api/tutos/${this.$route.params.id}/update`,
-        requestOptions
-      );
-      let data = await rawResponse.json();
+      fetch(`/api/tutos/${this.$route.params.id}/update`,requestOptions);
+      
 
       this.$router.push({ name: 'Home' })
 
