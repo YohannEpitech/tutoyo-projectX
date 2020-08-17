@@ -17,7 +17,7 @@ RUN groupadd -g 1000 user \
 COPY composer.json  /usr/src/projectx-backend/
 COPY composer.lock /usr/src/projectx-backend/
 WORKDIR /usr/src/projectx-backend/
-# RUN composer install --no-scripts --no-autoloader
+RUN composer install --no-scripts --no-autoloader
 COPY . /usr/src/projectx-backend/
 
 ENV DB_HOST=db
