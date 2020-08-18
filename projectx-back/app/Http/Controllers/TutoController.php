@@ -28,25 +28,27 @@ class TutoController extends Controller
             'title' => 'string|required | unique:tutos|max:255',
             'difficulty' => 'required',
             'langage' => 'required',
-            'state' => 'integer|required',
-            'author_id' => 'integer|required',
-            'summary' => 'string',
+            'state' => 'required',
+            'author_id' => 'required',
+            'summary' => 'string|max:255',
             'content' => 'string',
-            'files'     =>  'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'files'     =>  'mimes:pdf|max:1000'
         ]);
-
         if ($validator->fails()){
             return response()->json([
                 "code" => 422,
                 'message'   =>  'Error validator']
                 ,422);
         }
-
-        $img=$request->file('files');
-        $name = Str::slug('tuto_'.time());
-        $folder = '/uploads/tutos';
-        $filePath = $name. '.' . $img->getClientOriginalExtension();
-        $img->storeAs($folder, $filePath, 'public');
+        if ($request['files']){
+            $img=$request->file('files');
+            $name = Str::slug('tuto_'.time());
+            $folder = '/uploads/tutos';
+            $filePath = $name. '.' . $img->getClientOriginalExtension();
+            $img->storeAs($folder, $filePath, 'public');
+        } else {
+            $request['files']='';
+        }
         if (!$request['summary']){
             $request['summary']='';
         }
@@ -54,7 +56,7 @@ class TutoController extends Controller
             $request['content']='';
         }
         if (!$request['files']){
-            $request['files']='';
+            $filePath='';
         }
         $newEntry = Tuto::create([
             'title'=>$request['title'],
@@ -133,12 +135,12 @@ class TutoController extends Controller
         }
         $validator = Validator::make($request->all(),[
             'title' => 'string|max:255',
-            'difficulty' => '',
+            'difficulty' => 'string',
             'langage' => 'string',
-            'state' => 'integer',
-            'summary' => 'string',
+            'state' => 'string',
+            'summary' => 'string|max:255',
             'content' => 'string',
-            'files'=>  'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'files'=>  'mimes:pdf|max:1000'
 
         ]);
         if ($validator->fails()){
@@ -149,6 +151,7 @@ class TutoController extends Controller
         }
 
 
+
         $tuto = Tuto::whereId($id)->first();
         $tuto->update([
             'title'=>$request['title'],
@@ -157,7 +160,6 @@ class TutoController extends Controller
             'state'=>$request['state'],
             'summary'=>$request['summary'],
             'content'=>$request['content'],
-            'pathImg'=>$request['pathImg'],
 
 
         ]);

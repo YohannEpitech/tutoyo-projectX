@@ -34,7 +34,7 @@ class UserController extends Controller
             'name'=> $request['username'],
             'email'=>$request['email'],
             'password'=>Hash::make($request['password']),
-            'follow_tutos' => serialize([1,2])
+            'follow_tutos' => serialize([])
         ]);
         return response()->json([
             "message" => 'User create',
@@ -179,7 +179,7 @@ class UserController extends Controller
         foreach ($tmpAuthor as $tuto){
             if ($tuto != null){
                 $tuto['authorName'] = $user->name;
-                $tutosAuthor = $tuto;
+                $tutosAuthor []= $tuto;
             }
 
 
@@ -199,7 +199,6 @@ class UserController extends Controller
                 $tutosFollow[]=$tmpTuto;
             }
         }
-
 
 
         return response()->json([
@@ -227,7 +226,9 @@ class UserController extends Controller
         return response()->json($user);
 
     }
+
     function del(Request $request){
+
         $idUser = $request['me'];
         $idTuto = $request['delTutoId'];
 

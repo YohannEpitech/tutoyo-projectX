@@ -55,10 +55,8 @@
         <label for="langage">{{ $t('read.langage') }} :</label>
         <div class="input-group">
           <select class="custom-select" id="langage" v-model="langage">
-            <option selected="selected" value="php">PHP</option>
-            <option value="C">C</option>
-            <option value="C++">C++</option>
-            <option value="docker">Docker</option>
+             <option v-for="lang in langagesAvailable" v-bind:key="lang.id" :value="lang.name">{{ lang.name }}</option>
+
           </select>
         </div>
       </div>
@@ -114,15 +112,16 @@ export default {
     return {
       errors:[],
       title: "",
-      difficulty: 1,
-      state: 1,
+      difficulty: "1",
+      state: "1",
       langage: "",
       summary: "",
       content: "",
       pathImg: "",
       files: '',
       filesURL:null,
-      langages:[]
+      langages:[],
+      langagesAvailable:[],
 
     };
   },
@@ -133,13 +132,16 @@ export default {
     if (this.$store.state.UserData.role <= 1 ){
       this.$router.push({ name: 'Home' })
     }
+    fetch(`/api/langages`)
+    .then(response => response.json())
+    .then(response =>{
+      this.langagesAvailable= response;
+    })
   },
   methods: {
     checkForm(e){
       e.preventDefault();
-      if (this.title && this.state && this.langage && this.difficulty) {
-        this.register();
-      }
+      
       this.errors = [];
       if (!this.title) {
         this.errors.push('Title required.');
@@ -152,6 +154,12 @@ export default {
       }
       if (!this.langage) {
         this.errors.push('Langage required.');
+      }
+      if (this.summary && this.summary.length>255) {
+        this.errors.push('Summary exceeded 255 characters.');
+      }
+      if (this.errors.length == 0) {
+        this.register();
       }
     },
     onFileChanged(event){

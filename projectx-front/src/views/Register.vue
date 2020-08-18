@@ -1,7 +1,7 @@
 <template>
   <div >
     <navbar/>
-    <div class="card m-2">
+    <div class="card  w-50 mx-auto  m-2 ">
       <div class="card-header text-center">{{ $t('sign.signuptitle') }}</div>
 
 <form
@@ -60,7 +60,7 @@
         >
       </div>
 
-<div class="text-right">
+<div class="text-right m-2">
         <input
           type="submit"
           :value="$t('sign.login')"
@@ -88,14 +88,10 @@ export default {
       c_password:null
     }
   },
-  created(){
-    if (this.$store.state.UserData.id != undefined){
-      this.$router.push({ name: 'Home' })
-    }
-  },
+  
   mounted(){
-    if (this.$store.state.UserData.id == undefined ){
-      this.$router.push({ name: 'Welcome' })
+    if (this.$store.state.UserData.id != undefined ){
+      this.$router.push({ name: 'Home' })
     }
   },
   methods:{
@@ -130,10 +126,7 @@ export default {
         let requestOptions = {
           method: 'POST',
           body: formdata,
-          header:{
-            'Authorization': 'Bearer '+this.$store.state.token,
-            'Accept': 'application/json',
-          },
+          
           redirect: 'follow'
         };
 
@@ -146,8 +139,7 @@ export default {
             this.$store.state.UserData=response.result;
             let date= new Date(Date.now()+60*60*100);
             let expireDate = date.toUTCString();
-            this.$store.state.token = response.result.token;
-            document.cookie=`token=${response.result.token};path=/;expires=${expireDate};samesite=lax`;
+            document.cookie=`token=${response.token};path=/;expires=${expireDate};samesite=lax`;
             this.$router.push({ name: 'Home' })
           }
         })

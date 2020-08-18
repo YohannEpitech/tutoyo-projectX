@@ -21,6 +21,7 @@
       </div>
 
       <div class>
+      <img v-if="langage!=''" :src="getImgUrl(langage)"  alt="img langage" height="100" />
         <label>{{ $t('read.langage') }} :</label>
         {{ langage }}
       </div>
@@ -86,6 +87,9 @@ export default {
     }
   },
   methods: {
+    getImgUrl(pic){
+      return require('@/assets/'+pic+'.png');
+    },
     downloadFile() {
       let formdata = new FormData();
       formdata.append("files", this.files);

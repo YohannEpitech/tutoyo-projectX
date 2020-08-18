@@ -1,7 +1,7 @@
 <template>
   <div class="myProfile">
     <navbar />
-    <div class="card m-2">
+    <div class="card m-2 w-50 mx-auto">
     <div class="card-header text-center">{{ $t('myProfileTitle') }}</div>
 
     <form
@@ -55,7 +55,7 @@
         >
       </div>
 
-<div class="text-right">
+<div class="text-right m-2">
         <input
           type="submit"
           :value="$t('sign.save')"

@@ -1,15 +1,15 @@
 <template>
-  <div class="indexTuto card m-3">
+  <div class="indexTuto card w-25 m-3">
       {{ datas.username }}
       {{ datas.email }}
-    <h1>Role</h1>
-    <div class="input-group">
+    Role
+    <span class="input-group w-50">
       <select class="custom-select" id="role" v-model="datas.role">
         <option value="0">Student</option>
         <option value="1">Prof</option>
         <option value="2">Admin</option>
       </select>
-      </div>
+      </span>
     <div class="card-footer">
       <button class="btn btn-success mr-3" @click="update" > Save </button>
 

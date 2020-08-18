@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <navbar/>
-    <div class="card w-50 mx-auto my-3">
+    <div class="card w-50 mx-auto m-2">
     <div class="card-header text-center">{{ $t('sign.logintitle') }}</div>
     <form
     id='loginForm'
@@ -39,7 +39,7 @@
         >
       </div>
 
-      <div class="text-right">
+      <div class="text-right m-2">
         <input
           type="submit"
           :value="$t('sign.login')"
@@ -106,10 +106,8 @@ export default {
           this.$store.state.UserData=response.result;
           let date= new Date(Date.now()+60*60*100);
           let expireDate = date.toUTCString();
-          this.$store.state.token = response.result.api_token;
-          localStorage.setItem("state", JSON.stringify(this.$store.state));
-          
-          document.cookie=`token=${response.result.api_token};path=/;expires=${expireDate};samesite=lax`;
+          localStorage.setItem("state", JSON.stringify(this.$store.state));          
+          document.cookie=`token=${response.token};path=/;expires=${expireDate};samesite=lax`;
           this.$router.push({ name: 'Home' })
         } else if (response.code === 404){
           throw new Error('User unknown or credentials dont matched')

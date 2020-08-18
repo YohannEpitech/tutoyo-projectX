@@ -1,7 +1,7 @@
 <template>
   <div class="indexTuto card m-3 " style="max-width:10rem;">
-      <input type="text" v-model="name" >
-        <img :src="getImgUrl(imgName)"  alt="img langage"  width="100"  />
+      <input type="text" v-model="datas.name" >
+        <img v-if="name != undefined":src="getImgUrl(datas.imgName)"  alt="img langage"  width="100"  />
     
      
     <div class="card-footer">
@@ -25,10 +25,6 @@ export default {
       name:'',
       imgName:''
     }
-  },
-  mounted(){
-    this.name = this.datas.name,
-    this.imgName = this.datas.imgName
   },
   methods: {
     getImgUrl(pic){

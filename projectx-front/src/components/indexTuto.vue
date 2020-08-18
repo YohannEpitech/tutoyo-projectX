@@ -1,47 +1,42 @@
 <template>
   <div class="indexTuto card m-3">
-    <div class="card-header">
-      <img :src="getImgUrl(datas.langage)"  alt="img langage" height="100" />
+    <div class="row">
+    <div class="col-1 mx-auto my-auto">
+    <img :src="getImgUrl(datas.langage)"  alt="img langage" height="100" />
+      </div>
+      <div class="col-8 text-left my-2">
       {{ datas.title }}
        <div v-show="datas.difficulty == 1">{{ $t('tuto.easy') }}</div>
-    <div v-show="datas.difficulty == 2">{{ $t('tuto.medium') }}</div>
-    <div v-show="datas.difficulty == 3">{{ $t('tuto.pro') }}</div>
-      {{ datas.langage }}
-
-    <div v-show="datas.state == 1">{{ $t('tuto.wip') }}</div>
+      <div v-show="datas.difficulty == 2">{{ $t('tuto.medium') }}</div>
+      <div v-show="datas.difficulty == 3">{{ $t('tuto.pro') }}</div>
+      <div v-show="datas.state == 1">{{ $t('tuto.wip') }}</div>
     <div v-show="datas.state == 2">{{ $t('tuto.available') }}</div>
     <div v-show="datas.state == 3">{{ $t('tuto.archived') }}</div>
-    </div>
-    <div class="card-body">
-      <v-md-preview :text="datas.summary" ></v-md-preview>
-      </div>
-    <div class="card-footer">
-      {{ datas.updated_at | moment("dddd, MMMM Do YYYY") }} {{ $t('tuto.by') }} {{ datas.authorName }}
+    <v-md-preview :text="datas.summary" ></v-md-preview>
+   </div>
+
+    <div class="col-2 bg-light ml-auto mr-2">
+      {{ datas.updated_at | moment("dddd, MMMM Do YYYY") }} </br>{{ $t('tuto.by') }} {{ datas.authorName }}
       <div v-if="typeIndex == '1'">
-        <div v-if="this.$store.state.UserData.id != undefined">
-          <div v-if="datas.author_id == this.$store.state.UserData.id ">
-            <router-link class="btn btn-primary" :to="'/tutos/'+datas.id">{{ $t('tuto.edit') }}</router-link>
-          </div>
-          <div v-else>
-          <div v-if="datas.id in this.$store.state.UserData.follow_tutos">
-            <button class="btn btn-primary" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
-          </div>
-          <div v-else>
-            <button class="btn btn-primary"  v-on:click="addTuto">{{ $t('tuto.follow') }}</button>
-          </div>
-        </div>
+        <div v-show="this.$store.state.UserData.id != undefined">
+            <router-link v-show="datas.author_id == this.$store.state.UserData.id " class="btn btn-primary" :to="'/tutos/'+datas.id">{{ $t('tuto.edit') }}</router-link>
+            <button v-if="isFollowedTuto()" class="btn btn-danger m-1" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
+            <button v-else class="btn btn-primary m-1"  v-on:click="addTuto">{{ $t('tuto.follow') }}</button>
+ 
           </div>
       </div>
 
-      <div v-else-if="typeIndex == '2'">
+      <div v-show="typeIndex == '2'">
         <div v-if="datas.author_id == this.$store.state.UserData.id ">
-            <router-link class="btn btn-primary mx-3" :to="'/tutos/'+datas.id" >{{ $t('tuto.edit') }}</router-link>
-            <router-link class="btn btn-primary mx-3" :to="'/tutos/'+datas.id+'/read'" >{{ $t('tuto.read') }}</router-link>
-          <span v-if="datas.state != 3"><a class="btn btn-primary mx-3" :href="'/api/tutos/'+datas.id+'/archive'">{{ $t('tuto.archive') }}</a ></span>
+            <router-link class="btn btn-danger m-1" :to="'/tutos/'+datas.id" >{{ $t('tuto.edit') }}</router-link>
+            <router-link class="btn btn-success m-1" :to="'/tutos/'+datas.id+'/read'" >{{ $t('tuto.read') }}</router-link>
+          <span v-if="datas.state != 3"><a class="btn btn-primary m-1" :href="'/api/tutos/'+datas.id+'/archive'">{{ $t('tuto.archive') }}</a ></span>
         </div>
-        <div v-else>
-          <button class="btn btn-primary mx-3" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
-          <router-link  class="btn btn-primary mx-3"  :to="'/tutos/'+datas.id+'/read'">{{ $t('tuto.read') }}</router-link>
+        </div>
+
+      <div v-show="typeIndex == '3'">
+          <button class="btn btn-danger m-1" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
+          <router-link  class="btn btn-success m-1"  :to="'/tutos/'+datas.id+'/read'">{{ $t('tuto.read') }}</router-link>
         </div>
       </div>
 
@@ -67,6 +62,16 @@ export default {
     getImgUrl(pic){
       return require('@/assets/'+pic+'.png');
     },
+    isFollowedTuto(){
+      if (this.$store.state.UserData.follow_tutos != undefined){
+        if (this.$store.state.UserData.follow_tutos.includes(this.datas.id)){
+          return true;
+
+        } else {
+          return false;
+        }
+      }
+    },
     addTuto() {
       let formdata = new FormData();
       formdata.append("me", this.$store.state.UserData.id);
@@ -84,6 +89,7 @@ export default {
       .then(response => response.json())
       .then(response =>{
         this.$store.state.UserData = response;
+        localStorage.setItem("state", JSON.stringify(this.$store.state));
         this.$emit('update-content')
       })
       
@@ -105,6 +111,7 @@ export default {
       .then(response => response.json())
       .then(response => {
         this.$store.state.UserData = response;
+        localStorage.setItem("state", JSON.stringify(this.$store.state));
         this.$emit('update-content')
 
       });

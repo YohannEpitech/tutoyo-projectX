@@ -8,11 +8,11 @@
   </button>
    
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav w-100 text-white">
+    <ul class="navbar-nav nav-pills w-100 text-white">
      
-      <router-link  v-if="this.$store.state.UserData.id != undefined" class="nav-item nav-link"  :to="{name: 'Home'}" >{{ $t('MenuHome') }}</router-link>
-      <router-link  v-if="this.$store.state.UserData.id != undefined" class="nav-item nav-link" to="/MyProfile">{{ $t('MenuProfile') }}</router-link>
-      <router-link v-if="this.$store.state.UserData.id != undefined" class="nav-item nav-link" :to="{name: 'logout'}" >{{ $t('MenuLogout') }}</router-link>
+      <router-link  v-if="this.$store.state.UserData.id != undefined" class="nav-link  "  :to="{name: 'Home'}" >{{ $t('MenuHome') }}</router-link>
+      <router-link  v-if="this.$store.state.UserData.id != undefined" class=" nav-link" to="/MyProfile">{{ $t('MenuProfile') }}</router-link>
+      <router-link v-if="this.$store.state.UserData.id != undefined" class="nav-link" :to="{name: 'logout'}" >{{ $t('MenuLogout') }}</router-link>
        
       <router-link v-if="this.$store.state.UserData.role > 1" class="nav-link" to="/adminUsers">{{ $t('MenuAdminUsers') }} </router-link></li>
       <router-link v-if="this.$store.state.UserData.role > 1" class="nav-link" to="/adminTutos">{{ $t('MenuAdminTutos') }} </router-link></li>
@@ -20,14 +20,13 @@
       <router-link  v-if="this.$store.state.UserData.id == undefined" class="nav-item nav-link" to="/login">{{ $t('MenuLogin') }}</router-link>
       <router-link   v-if="this.$store.state.UserData.id == undefined"class="nav-item nav-link" to="/register">{{ $t('MenuRegister') }}</router-link>
       <router-link v-if="this.$store.state.UserData.role > 0" class="nav-item nav-link btn btn-success w-10" to="/createtuto">{{ $t('MenuCreateTuto') }} </router-link>
-      <input class=" form-input mr-sm-2 w-10 mx-auto" type="search" placeholder="Search" aria-label="Search" @input="search"
-                                                                                 v-model="value">
-      <localeChanger/>
+      
+      <localeChanger class=" ml-auto mr-2"/>
     </ul>
    
   </div>
+ 
 </nav>
-
   </div>
 </template>
 
@@ -84,3 +83,11 @@ components:{
     }
 }
 </script>
+<style>
+ 
+ nav router-link-active,
+ nav router-link-exact-active {
+   background-color: indianred;
+   cursor: pointer;
+ }
+</style>

@@ -44,7 +44,7 @@
       <div class="">
         <label for="state">{{ $t('read.state') }} :</label>
         <div class="input-group">
-          <select class="custom-select" id="state" v-model="difficulty">
+          <select class="custom-select" id="state" v-model="state">
             <option selected="selected" value="1">WIP</option>
         <option value="2">Available</option>
         <option value="3">Archived</option>
@@ -56,10 +56,8 @@
         <label for="langage">{{ $t('read.langage') }} :</label>
         <div class="input-group">
           <select class="custom-select" id="langage" v-model="langage">
-            <option selected="selected" value="php">PHP</option>
-            <option value="C">C</option>
-            <option value="C++">C++</option>
-            <option value="docker">Docker</option>
+            <option v-for="lang in langagesAvailable" v-bind:key="lang.id" :value="lang.name">{{ lang.name }}</option>
+            
           </select>
         </div>
       </div>
@@ -119,6 +117,7 @@ export default {
       content: "",
       pathImg: "",
       files: "",
+      langagesAvailable:[],
 
     };
   },
@@ -142,24 +141,31 @@ export default {
     .catch((error)=>{
       this.errors.push(error.message);
     })
+    fetch(`/api/langages`)
+    .then(response => response.json())
+    .then(response =>{
+      this.langagesAvailable= response;
+    })
+        
   },
   mounted(){
     if (this.$store.state.UserData.id == undefined ){
       this.$router.push({ name: 'Welcome' })
     }
-    if (this.$store.state.UserData.role <= 1 ){
+    if (this.$store.state.UserData.role < 1 ){
       this.$router.push({ name: 'Home' })
     }
   },
   methods: {
     checkForm(e){
       e.preventDefault();
-      if (this.title && this.state && this.langage && this.difficulty) {
-        this.register();
-      }
+      
       this.errors = [];
       if (!this.title) {
         this.errors.push('Title required.');
+      }
+      if (this.title && this.title.length >100) {
+        this.errors.push('Title exceeded 100 characters.');
       }
       if (!this.state) {
         this.errors.push('State required.');
@@ -169,6 +175,9 @@ export default {
       }
       if (!this.langage) {
         this.errors.push('Langage required.');
+      }
+      if (this.errors.length ==0) {
+        this.submit();
       }
     },
 

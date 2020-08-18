@@ -1,10 +1,11 @@
 <template>
   <div class="indexTuto card m-3">
-      {{ datas.title }}
-      {{ datas.created_at }}
+      {{ datas.title }}<br>
+      Last update :{{ datas.updated_at| moment("dddd, MMMM Do YYYY") }}<br>
+      {{ datas.summary }}
 
 
-    <div class="card-footer">
+    <div class="card-footer text-right">
       <button class="btn btn-success mr-3" @click="edit" > Edit </button>
 
     <button class="btn btn-danger" @click="del" > Delete </button>

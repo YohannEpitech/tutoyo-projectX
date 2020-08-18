@@ -15,13 +15,13 @@ class CreateTutosTable extends Migration
     {
         Schema::create('tutos', function (Blueprint $table) {
             $table->id()->unique();
-            $table->string('title')->unique();
+            $table->string('title');
             $table->integer('author_id');
-            $table->integer('difficulty')->nullable();
+            $table->string('difficulty')->nullable();
             $table->string('langage')->nullable();
-            $table->integer('state');
+            $table->string('state');
             $table->string('summary')->nullable();
-            $table->string('content')->nullable();
+            $table->longText('content');
             $table->string('files')->nullable();
             $table->string('ratings')->nullable()->default(0);
             $table->string('nb_ratings')->nullable()->default(0);
