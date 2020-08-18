@@ -112,7 +112,7 @@ class TutoController extends Controller
         }
         $tutos =  Tuto::whereId($id)->first();
         $tmpImg =  DB::table('langages')->where('name',$tutos->langage)->first();
-            $tutos['imgName'] = $tmpImg->imgName;
+        $tutos['imgName'] = $tmpImg->imgName;
         return response()->json([
             'code' => 200,
             'result' => $tutos],200);
