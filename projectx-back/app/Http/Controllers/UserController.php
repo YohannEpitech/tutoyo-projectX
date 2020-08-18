@@ -129,13 +129,13 @@ class UserController extends Controller
         }
 
         $user =  User::whereId($id)->first();
-        if ($request['username'] != ''){
+        if ($request['username']){
             $user->name = $request['username'];
         }
-        if ($request['follow_tutos'] != null){
+        if ($request['follow_tutos'] ){
             $user->follow_tutos = serialize($request['follow_tutos']);
         }
-        if ($request['follow_tutos'] != null){
+        if ($request['role']){
             $user->role = $request['role'];
         }
         $user->save();

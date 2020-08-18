@@ -229,6 +229,8 @@ class TutoController extends Controller
             } else {
                 $tuto['authorName'] = 'nobody';
             }
+            $tmpImg =  DB::table('langages')->where('name',$tuto->langage)->first();
+            $tuto['imgName'] = $tmpImg->imgName;
         }
         return response()->json([
             "code" => 200,
