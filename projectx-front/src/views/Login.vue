@@ -106,6 +106,8 @@ export default {
           this.$store.state.UserData=response.result;
           let date= new Date(Date.now()+60*60*100);
           let expireDate = date.toUTCString();
+          this.$store.state.token=response.token;
+
           localStorage.setItem("state", JSON.stringify(this.$store.state));          
           document.cookie=`token=${response.token};path=/;expires=${expireDate};samesite=lax`;
           this.$router.push({ name: 'Home' })

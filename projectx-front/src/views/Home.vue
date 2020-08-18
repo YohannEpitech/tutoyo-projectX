@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <navbar />
+    <div class="m-3">
     <h1>{{ $t('home.dashboard') }}</h1>
     <div v-if="listsOwner.length != 0">
       <h2>{{ $t('home.mytutos') }}</h2>
@@ -13,6 +14,7 @@
     <div v-for="tuto in listsFollow" v-bind:key="tuto.id">
       <indextuto :typeIndex="3" :datas="tuto" v-on:update-content="updateList" />
     </div>
+  </div>
   </div>
 </template>
 

@@ -126,7 +126,10 @@ export default {
         let requestOptions = {
           method: 'POST',
           body: formdata,
-          
+          header:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
           redirect: 'follow'
         };
 
@@ -137,6 +140,8 @@ export default {
         .then(response =>{
           if (response.code === 201){
             this.$store.state.UserData=response.result;
+            this.$store.state.token=response.token;
+
             let date= new Date(Date.now()+60*60*100);
             let expireDate = date.toUTCString();
             document.cookie=`token=${response.token};path=/;expires=${expireDate};samesite=lax`;

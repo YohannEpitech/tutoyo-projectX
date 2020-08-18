@@ -44,7 +44,8 @@ export default {
         method: "POST",
         body: formdata,
         header:{
-          'Authorization': this.$store.state.token,
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
         },
         redirect: "follow",
       };
