@@ -21,7 +21,7 @@
       </div>
 
       <div class>
-      <img v-if="langage!=''" :src="getImgUrl(langage)"  alt="img langage" height="100" />
+      <img v-if="langage!=''" :src="getImgUrl(imgName)"  alt="img langage" height="100" />
         <label>{{ $t('read.langage') }} :</label>
         {{ langage }}
       </div>
@@ -57,6 +57,7 @@ export default {
       content: "",
       pathImg: "",
       files: "",
+      imgName:"",
     };
   },
 
@@ -75,8 +76,9 @@ export default {
             this.langage = response.result.langage;
             this.summary = response.result.summary;
             this.content = response.result.content;
-            this.pathImg = response.result.pathImg;
+            this.imgName = response.result.imgName;
             this.files = response.result.files;
+
           }
         });
     }
@@ -88,7 +90,7 @@ export default {
   },
   methods: {
     getImgUrl(pic){
-      return require('@/assets/'+pic+'.png');
+      return require('@/assets/'+pic);
     },
     downloadFile() {
       let formdata = new FormData();
