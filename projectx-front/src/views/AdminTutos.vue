@@ -1,12 +1,13 @@
 <template>
   <div class="home">
         <navbar/>
-
+<div class="m-2">
    <h1>Admin Tutos</h1>
    <router-link v-if="this.$store.state.UserData.role > 0" class="nav-item nav-link btn btn-success w-25" to="/createtuto">{{ $t('MenuCreateTuto') }} </router-link>
    <div v-for="tuto in tutoList" v-bind:key="tuto.id">
       <indexAdminTuto :datas="tuto" v-on:del-tuto="delTuto" v-on:edit-tuto="editTuto"/>
     </div>
+     </div>
   </div>
 </template>
 

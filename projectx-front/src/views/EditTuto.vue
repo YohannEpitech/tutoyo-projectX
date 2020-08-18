@@ -80,7 +80,7 @@
           type="file"
           name="title"
           class="mx-2 mt-2"
-          accept="image/jpeg, image/png"
+          accept="application/pdf"
           @change="onFileChanged"
           aria-describedby="file"
         >

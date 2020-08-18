@@ -2,7 +2,7 @@
   <div class="indexTuto card m-3">
     <div class="row">
     <div class="col-1 mx-auto my-auto">
-    <img :src="getImgUrl(datas.langage)"  alt="img langage" height="100" />
+    <img :src="getImgUrl(datas.imgName)"  alt="img langage" height="100" />
       </div>
       <div class="col-8 text-left my-2">
       {{ datas.title }}
@@ -19,9 +19,10 @@
       {{ datas.updated_at | moment("dddd, MMMM Do YYYY") }} </br>{{ $t('tuto.by') }} {{ datas.authorName }}
       <div v-if="typeIndex == '1'">
         <div v-show="this.$store.state.UserData.id != undefined">
-            <router-link v-show="datas.author_id == this.$store.state.UserData.id " class="btn btn-primary" :to="'/tutos/'+datas.id">{{ $t('tuto.edit') }}</router-link>
+            <router-link v-show="datas.author_id == this.$store.state.UserData.id " class="btn btn-danger" :to="'/tutos/'+datas.id">{{ $t('tuto.edit') }}</router-link>
             <button v-if="isFollowedTuto()" class="btn btn-danger m-1" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
             <button v-else class="btn btn-primary m-1"  v-on:click="addTuto">{{ $t('tuto.follow') }}</button>
+            <router-link class="btn btn-success m-1" :to="'/tutos/'+datas.id+'/read'" >{{ $t('tuto.read') }}</router-link>
  
           </div>
       </div>
@@ -60,7 +61,7 @@ export default {
   },
   methods: {
     getImgUrl(pic){
-      return require('@/assets/'+pic+'.png');
+      return require('@/assets/'+pic);
     },
     isFollowedTuto(){
       if (this.$store.state.UserData.follow_tutos != undefined){

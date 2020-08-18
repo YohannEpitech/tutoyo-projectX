@@ -84,6 +84,9 @@ class TutoController extends Controller
             } else {
                 $tuto['authorName'] = 'nobody';
             }
+            $tmpImg =  DB::table('langages')->where('name',$tuto->langage)->first();
+            $tuto['imgName'] = $tmpImg->imgName;
+
         }
         return response()->json($tutos);
     }
@@ -108,6 +111,8 @@ class TutoController extends Controller
             ), 404);
         }
         $tutos =  Tuto::whereId($id)->first();
+        $tmpImg =  DB::table('langages')->where('name',$tutos->langage)->first();
+            $tutos['imgName'] = $tmpImg->imgName;
         return response()->json([
             'code' => 200,
             'result' => $tutos],200);

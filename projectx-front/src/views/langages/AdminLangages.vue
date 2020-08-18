@@ -1,12 +1,13 @@
 <template>
   <div>
     <navbar/>
-
-    <h1>Admin Langage</h1>
+<div class="m-2">
+    <h1>Admin Langages</h1>
     <!-- <button class="btn btn-success mr-3" @click="add" > Add langage </button> -->
 
     <div class="card-group" v-for="langage in langageList" v-bind:key="langage.id">
       <indexLangage :datas="langage" v-on:update-langage="updateLangage"/>
+    </div>
     </div>
   </div>
 </template>

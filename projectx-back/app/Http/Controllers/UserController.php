@@ -177,10 +177,15 @@ class UserController extends Controller
         $tmpAuthor = Tuto::where('author_id','=',$idUser)->get();
         $tutosAuthor = [];
         foreach ($tmpAuthor as $tuto){
+
             if ($tuto != null){
                 $tuto['authorName'] = $user->name;
+
+                $tmpImg =  DB::table('langages')->where('name',$tuto->langage)->first();
+                $tuto['imgName'] = $tmpImg->imgName;
                 $tutosAuthor []= $tuto;
             }
+
 
 
         }
@@ -196,8 +201,12 @@ class UserController extends Controller
                 } else {
                     $tmpTuto['authorName'] = 'nobody';
                 }
+
+                $tmpImg =  DB::table('langages')->where('name',$tmpTuto->langage)->first();
+                $tmpTuto['imgName'] = $tmpImg->imgName;
                 $tutosFollow[]=$tmpTuto;
             }
+
         }
 
 
