@@ -18,7 +18,10 @@ services:
             context: ./projectx-back
         environment:
             DB_NAME: projectx
+            DB_USERNAME: my_shop
             DB_PASSWORD: password
+        volumes:
+            - /home/yobar/projectx/backend-storage:/usr/src/projectx-backend/public/uploads:rw
 
     db:
         restart: always
