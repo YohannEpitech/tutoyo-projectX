@@ -18,12 +18,12 @@ class Authorization
         $token = $request->header('authorization');
         if ($token){
             $token = explode(' ',$token)[1];
-            $users = User::select('api_token')->get();
+            $users = User::all();
             $check = false;
             foreach ($users as $user){
                 if ($user['api_token'] == $token){
                     $check = true;
-                break;
+                    break;
                 }
             }
             if ($check) {

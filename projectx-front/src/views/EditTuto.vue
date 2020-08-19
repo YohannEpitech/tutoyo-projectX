@@ -141,8 +141,16 @@ export default {
         this.difficulty= response.result.difficulty;
         this.state = response.result.state;
         this.langage= response.result.langage;
-        this.summary= response.result.summary;
-        this.content= response.result.content;
+        if (response.result.summary == 'null'){
+          this.summary=""
+        } else {
+          this.summary= response.result.summary;
+        }
+        if (response.result.content == 'null'){
+          this.content=""
+        } else {
+          this.content= response.result.content;
+        }
         this.fileDisplay = response.result.files;
       } else {
         throw new Error('Id tuto unknown')

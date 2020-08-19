@@ -65,7 +65,7 @@ export default {
         },
         redirect: "follow",
       };
-      fetch(`/api/tutos`,requestOptions)
+      fetch(`/api/tutos/all`,requestOptions)
       .then(response=> response.json())
       .then(response =>{
         this.tutoList = response;      });

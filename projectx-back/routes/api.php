@@ -33,7 +33,10 @@ Route::middleware('authorize')->group(function () {
     Route::get('/users/{id}/tutos', 'UserController@myTutos');
 
     Route::post('/tutos', 'TutoController@store');
+    Route::get('/tutos/all', 'TutoController@all')->middleware('admin');
+
     Route::get('/tutos/{id}', 'TutoController@show');
+
     Route::delete('/tutos/{id}', 'TutoController@destroy')->middleware('admin');
     Route::resource('langages', 'LangageController');
 

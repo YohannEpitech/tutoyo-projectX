@@ -28,7 +28,7 @@ class Admin
 
         return response()->json([
             "code"=> 401,
-            "message"=> "User unauthorized"
+            "message"=> "Only admin can used this route"
         ]);
     }
 }

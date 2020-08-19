@@ -43,11 +43,9 @@ class TutoController extends Controller
         if ($request['files']){
             $img=$request->file('files');
             $name = Str::slug('tuto_'.time());
-            $folder = '/uploads/tutos';
+            $folder = '/tutos';
             $filePath = $name. '.' . $img->getClientOriginalExtension();
             $img->storeAs($folder, $filePath, 'public');
-        } else {
-            $request['files']='';
         }
         if (!$request['summary']){
             $request['summary']='';
@@ -173,7 +171,7 @@ class TutoController extends Controller
         if ($request->has('files')){
             $img=$request->file('files');
             $name = Str::slug('tuto_'.time());
-            $folder = '/uploads/tutos';
+            $folder = '/tutos';
             $filePath = $name. '.' . $img->getClientOriginalExtension();
             $img->storeAs($folder, $filePath, 'public');
             $tuto->files=$filePath;
@@ -203,6 +201,20 @@ class TutoController extends Controller
 
     }
 
+    function all(){
+        $tutos = Tuto::all();
+        foreach ($tutos as $tuto){
+            $tmpUser= DB::table('users')->whereId($tuto->author_id)->first();
+            if ($tmpUser !== null) {
+                $tuto['authorName'] = $tmpUser->name;
+            } else {
+                $tuto['authorName'] = 'nobody';
+            }
+            $tmpImg =  DB::table('langages')->where('name',$tuto->langage)->first();
+            $tuto['imgName'] = $tmpImg->imgName;
+        }
+        return response()->json($tutos);
+    }
     function storeImage(Request $request){
         $file = $request->file('files');
         $file->storeAs('/uploads/','test.png','uploads');

@@ -16,18 +16,21 @@ class DatabaseSeeder extends Seeder
             'name' => 'Yohann1',
             'email' => '1@gmail.com',
             'role' => 2,
+            'follow_tutos'=>'a:0:{}',
             'password' => Hash::make('password'),
         ]);
         DB::table('users')->insert([
             'name' => 'Yohann2',
             'email' => '2@gmail.com',
             'role' => 1,
+            'follow_tutos'=>'a:0:{}',
             'password' => Hash::make('password'),
         ]);
         DB::table('users')->insert([
             'name' => 'Yohann3',
             'email' => '3@gmail.com',
             'role' => 0,
+            'follow_tutos'=>'a:0:{}',
             'password' => Hash::make('password'),
         ]);
         DB::table('langages')->insert([
