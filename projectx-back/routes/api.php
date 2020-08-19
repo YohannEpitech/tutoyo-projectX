@@ -36,9 +36,10 @@ Route::middleware('authorize')->group(function () {
     Route::get('/tutos/{id}', 'TutoController@show');
     Route::post('/tutos/{id}/destroy', 'TutoController@destroy')->middleware('admin');
     Route::post('/tutos/{id}/update', 'TutoController@update');
-    Route::get('/tutos/{id}/download', 'TutoController@download');
+
     Route::get('/tutos/{id}/archive', 'TutoController@archive');
 
-    Route::resource('langages', 'LangageController')->middleware('admin');
+    Route::resource('langages', 'LangageController');
 });
 
+Route::get('/tutos/{id}/download', 'TutoController@download');

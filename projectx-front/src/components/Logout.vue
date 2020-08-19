@@ -13,7 +13,7 @@ export default {
     let requestOptions = {
           method: 'POST',
           body: formdata,
-          header:{
+          headers:{
             'Authorization': 'Bearer '+this.$store.state.token,
             'Accept': 'application/json',
           },

@@ -104,7 +104,7 @@ export default {
       let formdata = new FormData();
       formdata.append("files", this.files);
       let requestOptions = {
-        method: "GET",
+        method: "POST",
         body: formdata,
         headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
@@ -112,7 +112,7 @@ export default {
         },
         redirect: "follow",
       };
-      fetch(`/api/tutos/${this.$route.params.id}/download`);
+      fetch(`/api/tutos/${this.$route.params.id}/download`,requestOptions);
     },
   },
 };
