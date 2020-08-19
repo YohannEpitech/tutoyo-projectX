@@ -68,6 +68,10 @@
         >
       </div>
     </form>
+   
+    <p class="text-center mt-3">{{ $t('sign.msgRegister') }} </p>
+    <a class="text-center" href="mailto:yohann.berthurel@epitech.eu">{{ $t('sign.mailRegister') }}</a>
+   
     </div>
   </div>
 </template>
@@ -126,7 +130,7 @@ export default {
         let requestOptions = {
           method: 'POST',
           body: formdata,
-          header:{
+          headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
           'Accept': 'application/json',
         },

@@ -21,7 +21,7 @@
       <router-link   v-if="this.$store.state.UserData.id == undefined"class="nav-item nav-link font-weight-bold" to="/register">{{ $t('MenuRegister') }}</router-link>
       <router-link v-if="this.$store.state.UserData.role > 0" class="nav-item nav-link btn btn-warning font-weight-bold w-10 ml-auto mr-2" to="/createtuto">{{ $t('MenuCreateTuto') }} </router-link>
       
-      <localeChanger class=" mx-2"/>
+      <localeChanger class=" ml-auto mr-2"/>
     </ul>
    
   </div>

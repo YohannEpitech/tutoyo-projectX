@@ -29,14 +29,14 @@
 
       <div v-show="typeIndex == '2'">
         <div v-if="datas.author_id == this.$store.state.UserData.id ">
-            <router-link class="btn btn-danger m-1" :to="'/tutos/'+datas.id" >{{ $t('tuto.edit') }}</router-link>
+            <router-link class="btn btn-danger m-1" :to="'/tutos/'+datas.id" >{{ $t('tuto.edit') }}</router-link><br>
             <router-link class="btn btn-success m-1" :to="'/tutos/'+datas.id+'/read'" >{{ $t('tuto.read') }}</router-link>
           <span v-if="datas.state != 3"><a class="btn btn-primary m-1" :href="'/api/tutos/'+datas.id+'/archive'">{{ $t('tuto.archive') }}</a ></span>
         </div>
         </div>
 
       <div v-show="typeIndex == '3'">
-          <button class="btn btn-danger m-1" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button>
+          <button class="btn btn-danger m-1" v-on:click="delTuto">{{ $t('tuto.nofollow') }}</button><br>
           <router-link  class="btn btn-success m-1"  :to="'/tutos/'+datas.id+'/read'">{{ $t('tuto.read') }}</router-link>
         </div>
       </div>
