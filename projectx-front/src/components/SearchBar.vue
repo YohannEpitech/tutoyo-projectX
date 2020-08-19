@@ -18,9 +18,20 @@ export default {
         value: ""
       };
     },
+    mounted(){
+      this.value = this.$store.state.search;
+      this.search();
+    },
+    watch:{
+      value:function(){
+         this.$store.state.search = this.value
+        localStorage.setItem("state", JSON.stringify(this.$store.state));          
+        this.search();
+      }
+    },
     methods: {
       search() {
-        if (this.value === "") {
+        if (this.$store.state.search == "") {
           let requestOptions = {
             method: 'GET',
             headers:{
@@ -36,7 +47,7 @@ export default {
           });
         } else {
           let formdata = new FormData();
-          formdata.append("searchField", this.value);
+          formdata.append("searchField", this.$store.state.search );
           let requestOptions = {
             method: 'POST',
             body: formdata,

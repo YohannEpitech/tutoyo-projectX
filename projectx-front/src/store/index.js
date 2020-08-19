@@ -7,6 +7,7 @@ export default new Vuex.Store({
     state: {
         UserData: {},
         token: '',
+        search: "",
     },
     mutations: {
         initData(state) {

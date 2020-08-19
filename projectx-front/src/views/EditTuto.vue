@@ -75,7 +75,7 @@
 
 <div class="">
         <label for="file">{{ $t('read.uploadFiles') }} :</label>
-        <span v-if="typeof files == 'string'">{{ files }}</span>
+        <span v-if="files != ''">{{ fileDisplay }}</span>
         <input
           id="file"
           type="file"
@@ -117,6 +117,7 @@ export default {
       summary: "",
       content: "",
       pathImg: "",
+      fileDisplay:"",
       files: "",
       langagesAvailable:[],
 
@@ -142,7 +143,7 @@ export default {
         this.langage= response.result.langage;
         this.summary= response.result.summary;
         this.content= response.result.content;
-        this.files = response.result.files;
+        this.fileDisplay = response.result.files;
       } else {
         throw new Error('Id tuto unknown')
         }
@@ -196,30 +197,29 @@ export default {
     
     onFileChanged(event){
       this.files  = event.target.files[0];
-    
     },
     submit() {
       let formdata = new FormData();
       formdata.append("title", this.title);
-      formdata.append("difficulty", this.difficulty);
-      formdata.append("state", this.state);
+      formdata.append("difficulty", parseInt(this.difficulty));
+      formdata.append("state", parseInt(this.state));
       formdata.append("langage", this.langage);
       formdata.append("summary", this.summary);
       formdata.append("content", this.content);
-      formdata.append('files', this.files);
+      if (this.files != ""){
+        formdata.append('files', this.files);
+      }
       let requestOptions = {
         method: "POST",
         body: formdata,
         headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
         },
         redirect: "follow",
       };
       fetch(`/api/tutos/${this.$route.params.id}/update`,requestOptions);
-      
-
       this.$router.push({ name: 'Home' })
-
     },
   },
 };

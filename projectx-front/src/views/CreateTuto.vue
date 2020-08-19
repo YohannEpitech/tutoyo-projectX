@@ -120,7 +120,7 @@ export default {
       pathImg: "",
       files: '',
       filesURL:null,
-      langages:[],
+      
       langagesAvailable:[],
 
     };
@@ -154,6 +154,9 @@ export default {
       if (!this.title) {
         this.errors.push('Title required.');
       }
+      if (this.title && this.title.length >100) {
+        this.errors.push('Title exceeded 100 characters.');
+      }
       if (!this.state) {
         this.errors.push('State required.');
       }
@@ -176,18 +179,22 @@ export default {
     register() {
       let formdata = new FormData();
       formdata.append("title", this.title);
-      formdata.append("difficulty", this.difficulty);
-      formdata.append("state", this.state);
+      formdata.append("difficulty", parseInt(this.difficulty));
+      formdata.append("state", parseInt(this.state));
       formdata.append("author_id", this.$store.state.UserData.id);
       formdata.append("langage", this.langage);
+
       formdata.append("summary", this.summary);
       formdata.append("content", this.content);
-      formdata.append('files', this.files);
+      if (this.files != ''){
+        formdata.append('files', this.files);
+      }
       let requestOptions = {
         method: "POST",
         body: formdata,
         headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
         },
         redirect: "follow",
       };
