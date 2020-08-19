@@ -75,10 +75,11 @@
 
 <div class="">
         <label for="file">{{ $t('read.uploadFiles') }} :</label>
+        <span v-if="typeof files == 'string'">{{ files }}</span>
         <input
           id="file"
           type="file"
-          name="title"
+          name="file"
           class="mx-2 mt-2"
           accept="application/pdf"
           @change="onFileChanged"
@@ -185,13 +186,17 @@ export default {
       if (!this.langage) {
         this.errors.push('Langage required.');
       }
+      if (this.summary && this.summary.length >255) {
+        this.errors.push('Title exceeded 255 characters.');
+      }
       if (this.errors.length ==0) {
         this.submit();
       }
     },
-
+    
     onFileChanged(event){
       this.files  = event.target.files[0];
+    
     },
     submit() {
       let formdata = new FormData();

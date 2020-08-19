@@ -100,20 +100,18 @@ export default {
     getImgUrl(pic){
       return require('@/assets/'+pic);
     },
-    downloadFile() {
-      let formdata = new FormData();
-      formdata.append("files", this.files);
-      let requestOptions = {
-        method: "POST",
-        body: formdata,
-        headers:{
-          'Authorization': 'Bearer '+this.$store.state.token,
-          'Accept': 'application/json',
-        },
-        redirect: "follow",
-      };
-      fetch(`/api/tutos/${this.$route.params.id}/download`,requestOptions);
-    },
+    // downloadFile() {
+    //   let requestOptions = {
+    //     method: "GET",
+    //     body: formdata,
+    //     headers:{
+    //       'Authorization': 'Bearer '+this.$store.state.token,
+    //       'Accept': 'application/json',
+    //     },
+    //     redirect: "follow",
+    //   };
+    //   fetch(`/api/tutos/${this.$route.params.id}/download`,requestOptions);
+    // },
   },
 };
 </script>

@@ -38,8 +38,8 @@ Route::middleware('authorize')->group(function () {
     Route::post('/tutos/{id}/update', 'TutoController@update');
 
     Route::get('/tutos/{id}/archive', 'TutoController@archive');
-
     Route::resource('langages', 'LangageController');
 });
+
 
 Route::get('/tutos/{id}/download', 'TutoController@download');
