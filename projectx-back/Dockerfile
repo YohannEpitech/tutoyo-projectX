@@ -36,6 +36,6 @@ RUN cp .env.example .env \
   && php artisan key:generate --ansi\
   && php artisan config:cache
 
-CMD php artisan config:cache && php artisan serve --host 0.0.0.0
+CMD php artisan config:cache && php artisan storage:link && php artisan serve --host 0.0.0.0
 
 
