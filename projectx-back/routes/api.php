@@ -22,29 +22,23 @@ Route::post('/logout', 'UserController@logout');
 Route::post('/tutos/search', 'TutoController@search');
 Route::get('/tutos', 'TutoController@index');
 
-// Route::middleware('auth:api')->group(function () {
+Route::middleware('authorize')->group(function () {
 
-Route::get('/users', 'UserController@all');
-Route::post('/users/me/tutos/add', 'UserController@add');
-Route::post('/users/me/tutos/delete', 'UserController@del');
-Route::post('/users/{id}/update', 'UserController@update');
-Route::post('/users/{id}/destroy', 'UserController@destroy');
-Route::get('/users/{id}', 'UserController@show');
-Route::get('/users/{id}/tutos', 'UserController@myTutos');
-Route::post('/tutos/create', 'TutoController@store');
-Route::get('/tutos/{id}', 'TutoController@show');
-Route::post('/tutos/{id}/destroy', 'TutoController@destroy');
-Route::post('/tutos/{id}/update', 'TutoController@update');
-Route::get('/tutos/{id}/download', 'TutoController@download');
-Route::get('/tutos/{id}/archive', 'TutoController@archive');
+    Route::get('/users', 'UserController@all');
+    Route::post('/users/me/tutos/add', 'UserController@add');
+    Route::post('/users/me/tutos/delete', 'UserController@del');
+    Route::post('/users/{id}/update', 'UserController@update');
+    Route::post('/users/{id}/destroy', 'UserController@destroy')->middleware('admin');
+    Route::get('/users/{id}', 'UserController@show');
+    Route::get('/users/{id}/tutos', 'UserController@myTutos');
 
-Route::resource('langages', 'LangageController');
-// });
+    Route::post('/tutos/create', 'TutoController@store');
+    Route::get('/tutos/{id}', 'TutoController@show');
+    Route::post('/tutos/{id}/destroy', 'TutoController@destroy')->middleware('admin');
+    Route::post('/tutos/{id}/update', 'TutoController@update');
+    Route::get('/tutos/{id}/download', 'TutoController@download');
+    Route::get('/tutos/{id}/archive', 'TutoController@archive');
 
+    Route::resource('langages', 'LangageController')->middleware('admin');
+});
 
-Route::any('{any}',function () {
-    return response()->json([
-        "code" => 401,
-        "message" => 'Route unknown or user unauthorized']
-        ,404);
-})->where('any', '.*');

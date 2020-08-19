@@ -79,7 +79,7 @@ export default {
       formdata.append("addTutoId", this.datas.id);
       let requestOptions = {
         method: "POST",
-        header:{
+        headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
           'Accept': 'application/json',
         },
@@ -101,7 +101,7 @@ export default {
       formdata.append("delTutoId", this.datas.id);
       let requestOptions = {
         method: "POST",
-        header:{
+        headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
           'Accept': 'application/json',
         },

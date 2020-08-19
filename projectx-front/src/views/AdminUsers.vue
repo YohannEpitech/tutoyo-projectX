@@ -43,7 +43,7 @@ export default {
       let requestOptions = {
         method: "POST",
         body: formdata,
-        header:{
+        headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
           'Accept': 'application/json',
         },
@@ -65,7 +65,15 @@ export default {
       this.initData();
     },
     initData(){
-      fetch(`/api/users`)
+      let requestOptions = {
+        method: "GET",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        redirect: "follow",
+      };
+      fetch(`/api/users`,requestOptions)
       .then(response=> response.json())
       .then(response =>{
         this.userList = response;

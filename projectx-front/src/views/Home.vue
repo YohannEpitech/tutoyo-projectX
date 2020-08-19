@@ -48,7 +48,14 @@ export default {
     },
     
     initData() {
-      fetch(`/api/users/${this.$store.state.UserData.id}/tutos`)
+      let requestOptions = {
+        method: "GET",
+        headers:{
+          authorization: 'Bearer '+this.$store.state.token,
+        },
+        
+      };
+      fetch(`/api/users/${this.$store.state.UserData.id}/tutos`,requestOptions)
       .then(response => response.json())
       .then(response =>{
         this.listsFollow = response.followedTuto;

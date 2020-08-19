@@ -93,9 +93,9 @@ export default {
       let requestOptions = {
         method: 'POST',
         body: formdata,
-        header:{
-          'Authorization': 'Bearer '+this.$store.state.token,
-          'Accept': 'application/json',
+        headers:{
+          Authorization: 'Bearer '+this.$store.state.token,
+          Accept: 'application/json',
         },
         redirect: 'follow'
       };

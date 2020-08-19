@@ -53,7 +53,15 @@ export default {
       this.initData();
     },
     initData(){
-      fetch(`/api/tutos`)
+      let requestOptions = {
+        method: "GET",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        redirect: "follow",
+      };
+      fetch(`/api/tutos`,requestOptions)
       .then(response=> response.json())
       .then(response =>{
         this.tutoList = response;      });

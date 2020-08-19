@@ -65,7 +65,15 @@ export default {
     if (this.$store.state.UserData.id == undefined) {
       this.$router.push({ name: "Welcome" });
     } else {
-      fetch(`/api/tutos/${this.$route.params.id}`)
+      let requestOptions = {
+        method: "GET",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        redirect: "follow",
+      };
+      fetch(`/api/tutos/${this.$route.params.id}`,requestOptions)
         .then((response) => response.json())
         .then((response) => {
           if (response.code === 200) {
@@ -98,7 +106,7 @@ export default {
       let requestOptions = {
         method: "GET",
         body: formdata,
-        header:{
+        headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
           'Accept': 'application/json',
         },

@@ -48,7 +48,7 @@ components:{
         if (this.value === "") {
           let requestOptions = {
             method: 'GET',
-            header:{
+            headers:{
               'Authorization': 'Bearer '+this.$store.state.token,
               'Accept': 'application/json',
             },
@@ -65,7 +65,7 @@ components:{
           let requestOptions = {
             method: 'POST',
             body: formdata,
-            header:{
+            headers:{
               'Authorization': 'Bearer '+this.$store.state.token,
               'Accept': 'application/json',
             },

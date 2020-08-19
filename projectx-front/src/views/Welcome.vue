@@ -34,11 +34,20 @@ export default {
   },
   methods:{
     initData(){
-    fetch(`/api/tutos`)
-    .then(response => response.json())
-    .then(response => {
-      this.lists = response
-    })
+      let requestOptions = {
+        method: "GET",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        redirect: "follow",
+      };
+      fetch(`/api/tutos`, requestOptions)
+      .then(response => response.json())
+      .then(response => {
+        this.lists = response
+      })
+      
     }
   }
 }

@@ -77,20 +77,7 @@ export default {
   },
   methods: {
     initData(){
-fetch(`/api/langages`)
-    .then(response => response.json())
-    .then(response =>{
-      if (response.code === 200){
-        this.id = response.result.id;
-        this.name= response.result.name;
-        this.files = response.result.files;
-      } else {
-        throw new Error('Id langage unknown')
-        }
-    })
-    .catch((error)=>{
-      this.errors.push(error.message);
-    })
+
     },
     checkForm(e){
       e.preventDefault();
@@ -110,19 +97,7 @@ fetch(`/api/langages`)
       this.files  = event.target.files[0];
     },
     async submit() {
-      var formdata = new FormData();
-      formdata.append("name", this.name);
-      formdata.append("files", this.files);
-      var requestOptions = {
-        method: "PUT",
-        body: formdata,
-        header:{
-          'Authorization': this.$store.state.token,
-        },
-        redirect: "follow",
-      };
-      fetch(`/api/langages/${this.id}`, requestOptions);
-      this.initData();
+   
     },
   },
 };

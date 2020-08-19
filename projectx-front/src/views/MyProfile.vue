@@ -88,7 +88,15 @@ export default {
     if (typeof(this.$store.state.UserData.id) == undefined) {
       this.$router.push({ name: "Welcome" });
     } else {
-      fetch(`/api/users/${this.$store.state.UserData.id}`)
+      let requestOptions = {
+        method: "GET",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        redirect: "follow",
+      };
+      fetch(`/api/users/${this.$store.state.UserData.id}`,requestOptions)
       .then(response => response.json())
       .then(response => {
         if (typeof(response.id) != undefined){
@@ -133,7 +141,7 @@ export default {
       var requestOptions = {
         method: "POST",
         body: formdata,
-        header:{
+        headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
           'Accept': 'application/json'
         },

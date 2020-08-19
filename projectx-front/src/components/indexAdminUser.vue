@@ -1,7 +1,6 @@
 <template>
   <div class="indexTuto card w-25 m-3">
-      {{ datas.username }}
-      {{ datas.email }}
+      {{ datas.name }} /{{ datas.email }}
     Role
     <span class="input-group w-50">
       <select class="custom-select" id="role" v-model="datas.role">

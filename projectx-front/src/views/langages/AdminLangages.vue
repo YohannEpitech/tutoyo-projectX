@@ -46,7 +46,7 @@ export default {
     updateLangage($id, $name, $imgFull){
      let requestOptions = {
         method: "PUT",
-        header:{
+        headers:{
           'Authorization': this.$store.state.token,
         },
         redirect: "follow",
@@ -58,7 +58,15 @@ export default {
     },
 
     initData(){
-      fetch(`/api/langages`)
+      let requestOptions = {
+        method: "GET",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        redirect: "follow",
+      };
+      fetch(`/api/langages`,requestOptions)
       .then(response=> response.json())
       .then(response =>{
         this.langageList = response;

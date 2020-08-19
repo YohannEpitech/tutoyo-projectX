@@ -35,7 +35,6 @@ export default {
 
     },
     update(){
-      console.log(this.imgFullName)
       this.$emit('update-langage',this.datas.id, this.name, this.imgFullName)
     },
 

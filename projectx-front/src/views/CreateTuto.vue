@@ -129,10 +129,18 @@ export default {
     if (this.$store.state.UserData.id == undefined ){
       this.$router.push({ name: 'Welcome' })
     }
-    if (this.$store.state.UserData.role <= 1 ){
+    if (this.$store.state.UserData.role < 1 ){
       this.$router.push({ name: 'Home' })
     }
-    fetch(`/api/langages`)
+    let requestOptions = {
+        method: "GET",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        redirect: "follow",
+      };
+    fetch(`/api/langages`,requestOptions)
     .then(response => response.json())
     .then(response =>{
       this.langagesAvailable= response;
@@ -178,7 +186,7 @@ export default {
       let requestOptions = {
         method: "POST",
         body: formdata,
-        header:{
+        headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
         },
         redirect: "follow",

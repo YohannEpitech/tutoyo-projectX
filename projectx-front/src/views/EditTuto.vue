@@ -123,7 +123,15 @@ export default {
   },
 
   created(){
-    fetch(`/api/tutos/${this.$route.params.id}`)
+    let requestOptions = {
+        method: "GET",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        redirect: "follow",
+      };
+    fetch(`/api/tutos/${this.$route.params.id}`,requestOptions)
     .then(response => response.json())
     .then(response =>{
       if (response.code === 200){
@@ -141,7 +149,8 @@ export default {
     .catch((error)=>{
       this.errors.push(error.message);
     })
-    fetch(`/api/langages`)
+    
+    fetch(`/api/langages`,requestOptions)
     .then(response => response.json())
     .then(response =>{
       this.langagesAvailable= response;
@@ -196,7 +205,7 @@ export default {
       let requestOptions = {
         method: "POST",
         body: formdata,
-        header:{
+        headers:{
           'Authorization': 'Bearer '+this.$store.state.token,
         },
         redirect: "follow",
