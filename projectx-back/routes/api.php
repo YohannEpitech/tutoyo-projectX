@@ -28,18 +28,21 @@ Route::middleware('authorize')->group(function () {
     Route::post('/users/me/tutos/add', 'UserController@add');
     Route::post('/users/me/tutos/delete', 'UserController@del');
     Route::post('/users/{id}/update', 'UserController@update');
-    Route::post('/users/{id}/destroy', 'UserController@destroy')->middleware('admin');
+    Route::delete('/users/{id}', 'UserController@destroy')->middleware('admin');
     Route::get('/users/{id}', 'UserController@show');
     Route::get('/users/{id}/tutos', 'UserController@myTutos');
 
-    Route::post('/tutos/create', 'TutoController@store');
+    Route::post('/tutos', 'TutoController@store');
     Route::get('/tutos/{id}', 'TutoController@show');
-    Route::post('/tutos/{id}/destroy', 'TutoController@destroy')->middleware('admin');
-    Route::post('/tutos/{id}/update', 'TutoController@update');
+    Route::delete('/tutos/{id}', 'TutoController@destroy')->middleware('admin');
+    Route::resource('langages', 'LangageController');
 
     Route::get('/tutos/{id}/archive', 'TutoController@archive');
-    Route::resource('langages', 'LangageController');
+    Route::post('/tutos/{id}/update', 'TutoController@update');
+
 });
+
+
 
 
 Route::get('/tutos/{id}/download', 'TutoController@download');

@@ -57,10 +57,14 @@ export default {
     },
     delUser($userId){
       let requestOptions = {
-        method: "POST",
+        method: "DELETE",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
         redirect: "follow",
       };
-      fetch(`/api/users/${$userId}/destroy`,
+      fetch(`/api/users/${$userId}`,
         requestOptions)
       this.initData();
     },

@@ -17,11 +17,11 @@ class CreateTutosTable extends Migration
             $table->id()->unique();
             $table->string('title');
             $table->integer('author_id');
-            $table->string('difficulty')->nullable();
-            $table->string('langage')->nullable();
+            $table->string('difficulty');
+            $table->string('langage');
             $table->string('state');
             $table->string('summary')->nullable();
-            $table->longText('content');
+            $table->longText('content')->nullable();
             $table->string('files')->nullable();
             $table->string('ratings')->nullable()->default(0);
             $table->string('nb_ratings')->nullable()->default(0);

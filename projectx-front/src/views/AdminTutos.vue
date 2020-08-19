@@ -45,10 +45,14 @@ export default {
     },
     delTuto($id){
       let requestOptions = {
-        method: "POST",
+        method: "DELETE",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
         redirect: "follow",
       };
-      fetch(`/api/tutos/${$id}/destroy`,
+      fetch(`/api/tutos/${$id}`,
         requestOptions)
       this.initData();
     },

@@ -23,7 +23,7 @@ COPY . /usr/src/projectx-backend/
 ENV DB_HOST=db
 ENV DB_PORT=3306
 ENV DB_DATABASE=projectx
-ENV DB_NAME=projectx
+ENV DB_USERNAME=projectx
 
 ENV DB_PASSWORD=password
 

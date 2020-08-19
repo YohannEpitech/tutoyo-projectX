@@ -30,14 +30,14 @@ class TutoController extends Controller
             'langage' => 'required',
             'state' => 'required',
             'author_id' => 'required',
-            'summary' => 'string|max:255',
-            'content' => 'string',
-            'files'     =>  'mimes:pdf|max:1000'
+            'summary' => 'nullable|string|max:255',
+            'content' => 'nullable|string',
+            'files'     =>  'nullable|mimes:pdf|max:1000'
         ]);
         if ($validator->fails()){
             return response()->json([
                 "code" => 422,
-                'message'   =>  'Error validator']
+                'message'   => $validator->errors()->all()]
                 ,422);
         }
         if ($request['files']){
@@ -144,15 +144,15 @@ class TutoController extends Controller
             'difficulty' => 'string',
             'langage' => 'string',
             'state' => 'string',
-            'summary' => 'string|max:255',
-            'content' => 'string',
-            'files'=>  'mimes:pdf|max:1000'
+            'summary' => 'nullable|string|max:255',
+            'content' => 'nullable|string',
+            'files'=>  'nullable|mimes:pdf|max:1000'
 
         ]);
         if ($validator->fails()){
             return response()->json([
                 'code'      =>  422,
-                'message'   =>  'Error validator']
+                'message'   =>  $validator->errors()->all()]
                 ,422);
         }
 

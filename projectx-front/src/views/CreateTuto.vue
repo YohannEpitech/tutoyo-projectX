@@ -198,7 +198,7 @@ export default {
         },
         redirect: "follow",
       };
-      fetch(`/api/tutos/create`, requestOptions);
+      fetch(`/api/tutos`, requestOptions);
       this.$router.push({ name: 'Home' })
     },
   },

@@ -26,7 +26,7 @@ class UserController extends Controller
         if ($validator->fails()){
             return response()->json([
                 'code'      =>  422,
-                'message'   =>  'Error validator in register']
+                'message'   =>  $validator->errors()->all()]
                 ,422);
         }
 
@@ -124,7 +124,7 @@ class UserController extends Controller
         if ($validator->fails()){
             return response()->json([
                 'code'      =>  422,
-                'message'   =>  'Error validator in update']
+                'message'   =>  $validator->errors()->all()]
                 ,422);
         }
 

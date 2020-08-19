@@ -47,7 +47,7 @@ const i18n = new VueI18n({
                 easy: 'Facile',
                 medium: 'Moyen',
                 pro: 'Experimenté',
-                wip: 'En cours',
+                wip: 'En cours de rédaction',
                 available: 'Disponible',
                 archived: 'Archivé',
                 by: 'par',
@@ -62,6 +62,13 @@ const i18n = new VueI18n({
                 downloadFiles: "Fichier à télécharger",
                 uploadFiles: "Fichier à charger"
 
+            },
+            errors: {
+                noTitle: 'Champ titre obligatoire',
+                noState: 'Champ état obligatoire',
+                noDifficulty: 'Champ difficulté obligatoire',
+                noLangage: 'Champ langage required',
+                msgGeneral: 'Corrigez les erreurs suivantes:'
             }
 
         },
