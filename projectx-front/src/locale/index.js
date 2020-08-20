@@ -60,7 +60,8 @@ const i18n = new VueI18n({
                 summary: "Résumé",
                 content: "Contenu",
                 downloadFiles: "Fichier à télécharger",
-                uploadFiles: "Fichier à charger"
+                uploadFiles: "Fichier à charger",
+                exercices: "Exercices"
 
             },
             errors: {
@@ -129,7 +130,8 @@ const i18n = new VueI18n({
                 summary: "Summary",
                 content: "Content",
                 downloadFiles: "File to download",
-                uploadFiles: "File to upload"
+                uploadFiles: "File to upload",
+                exercices: "Exercicss"
             },
             errors: {
                 noTitle: 'Title required',

@@ -153,8 +153,12 @@ class TutoController extends Controller
                 'message'   =>  $validator->errors()->all()]
                 ,422);
         }
-
-
+        if ($request['content'] == null){
+            $request['content']="";
+        }
+        if ($request['summary'] == null){
+            $request['summary']="";
+        }
 
         $tuto = Tuto::whereId($id)->first();
         $tuto->update([

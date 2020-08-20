@@ -1,39 +1,40 @@
 <template>
   <div>
     <navbar />
-    <router-link :to="{ name: 'Home'}">{{ $t('back') }}</router-link>
+    <router-link class="m-2" :to="{ name: 'Home'}">{{ $t('back') }}</router-link>
     <div class="card  m-4 p-3">
       <div class>
-        <label for="title">{{ $t('read.title') }}</label>
+        <label for="title " class="font-weight-bold">{{ $t('read.title') }} : </label>
         {{ title }}
       </div>
       <div class>
-        <label for="title">{{ $t('read.difficulty') }}:</label>
+        <label for="title" class="font-weight-bold">{{ $t('read.difficulty') }} : </label>
         <span v-show="difficulty == 1">{{ $t('tuto.easy') }}</span>
         <span v-show="difficulty == 2">{{ $t('tuto.medium') }}</span>
         <span v-show="difficulty == 3">{{ $t('tuto.pro') }}</span>
       </div>
       <div class>
-        <label>{{ $t('read.state') }} :</label>
+        <label class="font-weight-bold">{{ $t('read.state') }} : </label>
         <span v-show="state == 1">{{ $t('tuto.wip') }}</span>
         <span v-show="state == 2">{{ $t('tuto.available') }}</span>
         <span v-show="state == 3">{{ $t('tuto.archived') }}</span>
       </div>
 
       <div class>
-      <img v-if="langage!=''" :src="getImgUrl(imgName)"  alt="img langage" height="100" />
-        <label>{{ $t('read.langage') }} :</label>
+      
+        <label  class="font-weight-bold">{{ $t('read.langage') }} : </label>
         {{ langage }}
+        <img v-if="langage!=''" :src="getImgUrl(imgName)"  alt="img langage" height="50" />
       </div>
 
-      <label>{{ $t('read.summary') }} :</label>
+      <label  class="font-weight-bold">{{ $t('read.summary') }} :</label>
 
       <v-md-preview :text="summary"></v-md-preview>
 
-      <label>{{ $t('read.content') }} :</label>
+      <label  class="font-weight-bold">{{ $t('read.content') }} :</label>
       <v-md-preview :text="content"></v-md-preview>
-      <label>{{ $t('read.downloadFiles') }} :</label>
-      <a :href="'/api/tutos/'+id+'/download'">{{ files }}</a>
+      <label  class="font-weight-bold">{{ $t('read.downloadFiles') }} :</label>
+      <a :href="'/api/tutos/'+id+'/download'">{{ $t('read.exercices') }}.pdf</a>
     </div>
   </div>
 </template>

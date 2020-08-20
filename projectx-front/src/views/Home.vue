@@ -6,7 +6,7 @@
     <div v-if="listsOwner.length != 0">
       <h2>{{ $t('home.mytutos') }}</h2>
       <div v-for="tutoOwner in listsOwner" v-bind:key="tutoOwner.id"  >
-        <indextuto :typeIndex="2" :datas="tutoOwner" />
+        <indextuto :typeIndex="2" :datas="tutoOwner" v-on:update-content="updateList" />
       </div>
     </div>
     <h2>{{ $t('home.followtutos') }}</h2>

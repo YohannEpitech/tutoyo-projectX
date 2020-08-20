@@ -40,7 +40,7 @@ Route::middleware('authorize')->group(function () {
     Route::delete('/tutos/{id}', 'TutoController@destroy')->middleware('admin');
     Route::resource('langages', 'LangageController');
 
-    Route::get('/tutos/{id}/archive', 'TutoController@archive');
+    Route::post('/tutos/{id}/archive', 'TutoController@archive');
     Route::post('/tutos/{id}/update', 'TutoController@update');
 
 });

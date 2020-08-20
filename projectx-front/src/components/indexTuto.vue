@@ -31,7 +31,8 @@
         <div v-if="datas.author_id == this.$store.state.UserData.id ">
             <router-link class="btn btn-danger m-1" :to="'/tutos/'+datas.id" >{{ $t('tuto.edit') }}</router-link><br>
             <router-link class="btn btn-success m-1" :to="'/tutos/'+datas.id+'/read'" >{{ $t('tuto.read') }}</router-link>
-          <span v-if="datas.state != 3"><a class="btn btn-primary m-1" :href="'/api/tutos/'+datas.id+'/archive'">{{ $t('tuto.archive') }}</a ></span>
+            <button v-if="datas.state != 3" class="btn btn-warning m-1" v-on:click="archiveTuto">{{ $t('tuto.archive') }}</button>
+          
         </div>
         </div>
 
@@ -116,6 +117,23 @@ export default {
         this.$emit('update-content')
 
       });
+    },
+      archiveTuto() {
+      let formdata = new FormData();
+      formdata.append("id", this.datas.id);
+      let requestOptions = {
+        method: "POST",
+        headers:{
+          'Authorization': 'Bearer '+this.$store.state.token,
+          'Accept': 'application/json',
+        },
+        body: formdata,
+        redirect: "follow",
+      };
+      fetch(`/api/tutos/${this.datas.id}/archive`,requestOptions);
+              this.$emit('update-content')
+
+      
     },
   },
 };
