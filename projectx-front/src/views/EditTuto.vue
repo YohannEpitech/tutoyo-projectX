@@ -221,6 +221,7 @@ export default {
         redirect: "follow",
       };
       fetch(`/api/tutos/${this.$route.params.id}/update`,requestOptions);
+      this.$emit('update-content')
       this.$router.push({ name: 'Home' })
     },
   },
