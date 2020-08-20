@@ -1,7 +1,12 @@
 <template>
   <div class="indexTuto card m-3">
       {{ datas.title }}<br>
+      <div v-show="datas.state == 1">{{ $t('tuto.wip') }}</div>
+    <div v-show="datas.state == 2">{{ $t('tuto.available') }}</div>
+    <div v-show="datas.state == 3">{{ $t('tuto.archived') }}</div>
+      {{ $t('tuto.by') }} {{ datas.authorName }}<br>
       Last update :{{ datas.updated_at| moment("dddd, MMMM Do YYYY") }}<br>
+      {{ $t('read.summary') }} :
       {{ datas.summary }}
 
 
