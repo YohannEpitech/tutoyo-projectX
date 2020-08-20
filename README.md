@@ -10,6 +10,22 @@ Le projet consiste à développer un site web regroupant les tutoriels réalisé
 Également, le site devra permettra de gérer le cycle de vie d’un module.
 Il devra être disponible en français et en anglais.
 
+# Lancement du projet
+Se mettre dans le dossier généré par le git-clone 
+```docker-compose build```
+
+Si tout se passe bien,
+```docker-compose up ```
+
+entrer dans le container backend
+```docker-compose exec backend bash```
+
+exécuter les commandes suivantes à l'intérieur
+``` php artisan migrate```
+``` php artisan storage:link```
+
+Votre site est maintenant fonctionnel 
+
 # Contraintes technologiques
 * PHP > 7.2
 * VueJS > 2
