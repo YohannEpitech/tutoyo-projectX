@@ -2,7 +2,7 @@
   <div class="indexTuto card m-3">
     <div class="row">
     <div class="col-1 mx-auto my-auto">
-    <img :src="getImgUrl(datas.imgName)"  alt="img langage" height="100" />
+    <img :src="getImgUrl(datas.imgName)"  alt="img langage" class="img-fluid" />
       </div>
       <div class="col-8 text-left my-2">
       {{ datas.title }}

@@ -257,7 +257,7 @@ class TutoController extends Controller
 
     function download(Request $request){
         $tuto = Tuto::whereId($request['id'])->first();
-        return  Storage::download("/public/uploads/tutos/".$tuto->files);
+        return  Storage::download("/public/tutos/".$tuto->files);
     }
 
     function archive(Request $request){
