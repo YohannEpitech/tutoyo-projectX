@@ -28,6 +28,8 @@ Route::middleware('authorize')->group(function () {
     Route::post('/users/me/tutos/add', 'UserController@add');
     Route::post('/users/me/tutos/delete', 'UserController@del');
     Route::post('/users/{id}/update', 'UserController@update');
+    Route::post('/users/{id}', 'UserController@update');
+
     Route::delete('/users/{id}', 'UserController@destroy')->middleware('admin');
     Route::get('/users/{id}', 'UserController@show');
     Route::get('/users/{id}/tutos', 'UserController@myTutos');

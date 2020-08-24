@@ -37,7 +37,7 @@ export default {
     }
   },
   methods:{
-    updateUser($userId, $newRole){
+    async updateUser($userId, $newRole){
       let formdata = new FormData();
       formdata.append("role", $newRole);
       let requestOptions = {
@@ -49,13 +49,13 @@ export default {
         },
         redirect: "follow",
       };
-      fetch(
+      await fetch(
         `/api/users/${$userId}/update`,
         requestOptions
       );
 
     },
-    delUser($userId){
+    async delUser($userId){
       let requestOptions = {
         method: "DELETE",
         headers:{
@@ -64,7 +64,7 @@ export default {
         },
         redirect: "follow",
       };
-      fetch(`/api/users/${$userId}`,
+      await fetch(`/api/users/${$userId}`,
         requestOptions)
       this.initData();
     },

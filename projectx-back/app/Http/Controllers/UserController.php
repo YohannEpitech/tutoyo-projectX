@@ -139,10 +139,10 @@ class UserController extends Controller
             $user->role = $request['role'];
         }
         $user->save();
-
         return response()->json([
             "code" => 201,
-            "message" => 'User successfully updated'
+            "message" => 'User successfully updated',
+            "users" => $user
         ],201 );
 
     }
@@ -220,7 +220,7 @@ class UserController extends Controller
 
     function add(Request $request){
 
-        $idUser = intval($request['me']);
+        $idUser = intval($request['id']);
         $idTuto = intval($request['addTutoId']);
         $user = User::whereId($idUser)->first();
 

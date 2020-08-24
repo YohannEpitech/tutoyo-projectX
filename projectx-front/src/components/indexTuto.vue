@@ -76,7 +76,7 @@ export default {
     },
     addTuto() {
       let formdata = new FormData();
-      formdata.append("me", this.$store.state.UserData.id);
+      formdata.append("id", this.$store.state.UserData.id);
       formdata.append("addTutoId", this.datas.id);
       let requestOptions = {
         method: "POST",
