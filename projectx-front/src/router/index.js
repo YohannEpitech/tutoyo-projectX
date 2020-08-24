@@ -7,6 +7,9 @@ import Login from '../views/Login.vue'
 import Logout from '../components/Logout.vue'
 import Welcome from '../views/Welcome.vue'
 
+import NotFound from '../views/NotFound.vue'
+
+
 import Register from '../views/Register.vue'
 import CreateTuto from '../views/CreateTuto.vue'
 import EditTuto from '../views/EditTuto.vue'
@@ -18,75 +21,82 @@ import adminLangages from '../views/langages/AdminLangages.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Welcome',
-    component: Welcome
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/myprofile',
-    name: 'myprofile',
-    component: MyProfile
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-  },
-  {
-    path: '/logout',
-    name: 'logout',
-    component: Logout
+const routes = [{
+        path: '/',
+        name: 'Welcome',
+        component: Welcome
+    },
+    {
+        path: '/home',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/myprofile',
+        name: 'myprofile',
+        component: MyProfile
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login,
+    },
+    {
+        path: '/logout',
+        name: 'logout',
+        component: Logout
 
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register,
-  },
-  {
-    path: '/createTuto',
-    name: 'createtuto',
-    component: CreateTuto,
-  },
-  {
-    path: '/tutos/:id/read',
-    name: 'readtuto',
-    component: ReadTuto,
-  },
-  {
-    path: '/tutos/:id',
-    name: 'edittuto',
-    component: EditTuto,
-  },
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register,
+    },
+    {
+        path: '/createTuto',
+        name: 'createtuto',
+        component: CreateTuto,
+    },
+    {
+        path: '/tutos/:id/read',
+        name: 'readtuto',
+        component: ReadTuto,
+    },
+    {
+        path: '/tutos/:id',
+        name: 'edittuto',
+        component: EditTuto,
+    },
 
-  {
-    path: '/adminUsers',
-    name: 'adminusers',
-    component: adminUsers,
-  },
-  {
-    path: '/adminTutos',
-    name: 'admintutos',
-    component: adminTutos,
-  },
-  {
-    path: '/adminLangages',
-    name: 'adminlangages',
-    component: adminLangages,
-  }
+    {
+        path: '/adminUsers',
+        name: 'adminusers',
+        component: adminUsers,
+    },
+    {
+        path: '/adminTutos',
+        name: 'admintutos',
+        component: adminTutos,
+    },
+    {
+        path: '/adminLangages',
+        name: 'adminlangages',
+        component: adminLangages,
+    },
+    {
+        path: '/404',
+        component: NotFound
+    },
+    {
+        path: '*',
+        redirect: '/404'
+    }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 
 export default router
